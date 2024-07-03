@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleETicketPlatform", "SimpleETicketPlatform\SimpleETicketPlatform.csproj", "{8146A1F1-F9F7-4E2E-B4EF-27C5A1DDAE79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8146A1F1-F9F7-4E2E-B4EF-27C5A1DDAE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8146A1F1-F9F7-4E2E-B4EF-27C5A1DDAE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8146A1F1-F9F7-4E2E-B4EF-27C5A1DDAE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8146A1F1-F9F7-4E2E-B4EF-27C5A1DDAE79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C569035F-8E4F-4903-ADE2-9EF687A9E89A}
+	EndGlobalSection
+EndGlobal
