@@ -13,9 +13,12 @@ namespace SimpleETicketPlatform.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new MovieActorConfiguration());
-            builder.ApplyConfiguration(new MovieConfiguration());
-            builder.ApplyConfiguration(new CinemaConfiguration());
+			builder.ApplyConfiguration(new CinemaConfiguration());
+			builder.ApplyConfiguration(new ProducerConfiguration());
+			builder.ApplyConfiguration(new MovieConfiguration());
+			builder.ApplyConfiguration(new ActorConfiguration());
+			builder.ApplyConfiguration(new MovieActorConfiguration());
+
             base.OnModelCreating(builder);
         }
 

@@ -10,6 +10,9 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
         {
             builder.HasOne(x => x.Producer).WithMany().HasForeignKey(x => x.ProducerId);
             builder.HasOne(x => x.Cinema).WithMany().HasForeignKey(x => x.CinemaId);
+            builder.Property(x => x.Price).HasColumnType("decimal(5,2)").IsRequired();
+            var data = new SeedData();
+            builder.HasData(new Movie[] { data.Movie1, data.Movie2, data.Movie3, data.Movie4, data.Movie5, data.Movie6 });
         }
     }
 }

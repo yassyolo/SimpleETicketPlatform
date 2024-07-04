@@ -13,14 +13,17 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 
         [Comment("Cinema name")]
         [MaxLength(NameMaxLength)]
+        [Required]
         public string Name { get; set; } = string.Empty;
 
         [Comment("Cinema logo")]
         [MaxLength(LogoMaxLength)]
+        [Required]
         public string Logo { get; set; } = string.Empty;
 
         [Comment("Cinema description")]
         [MaxLength(DescriptionMaxLength)]
+        [Required]
         public string Description { get; set; } = string.Empty;
 
         [Comment("Movies in the cinema")]

@@ -14,29 +14,36 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 
         [Comment("Movie name")]
         [MaxLength(NameMaxLength)]
+        [Required]
         public string Name { get; set; } = string.Empty;
 
         [Comment("Movie description")]
         [MaxLength(DescriptionMaxLength)]
+        [Required]
         public string Description { get; set; } = string.Empty;
 
         [Comment("Movie price")]
         [Range(typeof(decimal), PriceMinValue,PriceMaxValue, ConvertValueInInvariantCulture = false)]
+        [Required]
         public decimal Price { get; set; }
 
         [Comment("Movie photo URL")]
         [MaxLength(PhotoURLMaxLength)]
+        [Required]
         public string PhotoURL { get; set; } = string.Empty;
 
         [Comment("Movie start date")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime StartDate { get; set; }
 
         [Comment("Movie end date")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime EndDate { get; set; }
 
         [Comment("Movie category")]
+        [Required]
         public MovieCategory MovieCategory { get; set; }
 
         [Comment("Movie actors")]
@@ -54,6 +61,6 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 
         [ForeignKey(nameof(ProducerId))]
         [Comment("Producer")]
-        public Cinema Producer { get; set; } = null!;
+        public Producer Producer { get; set; } = null!;
     }
 }

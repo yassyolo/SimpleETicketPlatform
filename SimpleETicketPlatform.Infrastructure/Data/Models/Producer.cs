@@ -13,14 +13,17 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 
         [Comment("Producer full name")]
         [MaxLength(FullNameMaxLength)]
+        [Required]
         public string FullName { get; set; } = string.Empty;
 
         [Comment("Producer biography")]
         [MaxLength(BiographyMaxLength)]
+        [Required]
         public string Biography { get; set; } = string.Empty;
 
         [Comment("Producer profile picture URL")]
         [MaxLength(ProfilePictureURLMaxLength)]
+        [Required]
         public string ProfilePictureURL { get; set; } = string.Empty;
 
         [Comment("Producer movies")]
