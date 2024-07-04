@@ -10,9 +10,10 @@ namespace SimpleETicketPlatform.Controllers
         {
             this.actorsService = actorsService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await actorsService.GetAllActorsAsync();
+            return View(model);
         }
     }
 }

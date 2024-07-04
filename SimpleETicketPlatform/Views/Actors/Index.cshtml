@@ -1,0 +1,36 @@
+﻿@model List<SimpleETicketPlatform.Core.Models.Actors.ActorIndexViewModel>
+@{
+	ViewData["Title"] = "All actors in the platform";
+}
+<div class="all-actors-container">
+	<h6 class="title">@ViewBag.Title</h6>
+	<div class="table-info">
+		<h3><b>Profile Picture</b></h3>
+		<h3><b>Full Name</b></h3>
+		<h3><b>Actions</b></h3>
+	</div>
+	<div class="all-actors">
+		@foreach (var actor in Model)
+		{
+			<div class="actor-row">
+				<div class="image">
+					<img src="@actor.ProfilePictureURL" />
+				</div>
+				<div class="actor-info">
+					<h3><b>@actor.FullName</b></h3>
+					<div class="btns">
+						<form asp-controller="Actors" asp-action="Edit" asp-route-id="@actor.Id" method="get">
+							<button type="submit" class="btn">Edit</button>
+						</form>
+						<form asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id" method="get">
+							<button type="submit" class="btn">Details</button>
+						</form>
+						<form asp-controller="Actors" asp-action="Delete" asp-route-id="@actor.Id" method="get">
+							<button type="submit" class="btn">Delete</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
