@@ -1,0 +1,55 @@
+﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieDetailsViewModel
+@{
+	ViewData["Title"] = "See movie details here: ";
+}
+<div class="movie-details-container">
+	<h3 class="title">@ViewBag.Title</h3>
+	<div class="image">
+		<img src="@Model.PhotoURL" />
+	</div>
+	<div class="movie-description">
+		<div class="movie-info">
+			<h2><b>Name: </b> <b>@Model.Name</b></h2>
+			<h2><b>Description: </b> <b>@Model.Description</b></h2>
+			<h2><b>Cinema: </b> <b>@Model.CinemaName </b> - <b>Status: </b> <b>@Model.Status </b></h2>
+			<h2><b>Dates: </b> <b>@Model.StartDate </b> -  <b>@Model.EndDate </b></h2>
+		</div>
+		<div class="movie-producer">
+			<img src="@Model.Producer.ProfilePictureURL" class="image" />
+			<h2><b>Name: </b> <b>@Model.Producer.FullName</b></h2>
+			<form asp-action="Details" asp-controller="Producers" asp-route-id="@Model.Producer.Id" method="get">
+				<button type="submit" class="btn">See All</button>
+			</form>
+		</div>
+		<div class="movie-actors">
+			<h4>Actors starring in the movie:</h4>
+			@foreach (var actor in Model.Actors)
+			{
+				<h2><b>Name: </b> <b>@actor.FullName</b></h2>
+			}
+			@foreach (var actor in Model.Actors)
+			{
+				<form asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" method="get">
+					<img src="@actor.ProfilePictureURL" class="image" />
+				</form>
+			}
+		</div>
+	</div>
+	<div class="card-buttons">
+		<form asp-action="Details" asp-controller="Movies" method="get">
+			<button type="submit" class="btn">Add to Cart (@Model.Price lv.)</button>
+		</form>
+		<form asp-action="Details" asp-controller="Movies" method="get">
+			<button type="submit" class="btn">See Details</button>
+		</form>
+	</div>
+</div>
+<style>
+	img {
+		height: 160px;
+		width: 135px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 5px;
+	}
+</style>

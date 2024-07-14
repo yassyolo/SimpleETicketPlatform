@@ -1,0 +1,121 @@
+﻿@model SimpleETicketPlatform.Core.Models.Movies.FilteredMoviesViewModel
+@{
+    ViewData["Title"] = "Filtered Movies";
+}
+
+<div class="all-movies-container">
+    <div class="title">@Model.MoviesMatched movies matched your search!</div>
+    <div class="all-cards-container">
+        @foreach (var movie in Model.Movies)
+        {
+            <div class="card">
+                <div class="card-title">
+                    <h4>@movie.Name</h4>
+                </div>
+                <div class="image">
+                    <img src="@movie.PhotoURL" />
+                </div>
+                <div class="card-info">
+                    <h6><b class="info">Cinema: </b>@movie.CinemaName</h6>
+                    <h6><b class="info">Category: </b>@movie.MovieCategory</h6>
+                    <h6><b class="info">Start Date: </b>@movie.StartDate</h6>
+                    <h6><b class="info">End Date: </b>@movie.EndDate</h6>
+                    <h6><b class="info">Status: </b>@movie.Status</h6>
+                </div>
+                <div class="card-buttons">
+                    <form asp-action="Details" asp-controller="Movies" method="get">
+                        <button type="submit" class="btn">Add to Cart (@movie.Price lv.)</button>
+                    </form>
+                    <form asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                        <button type="submit" class="btn">See Details</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+    @await Html.PartialAsync("_AddPartial", "Movies")
+</div>
+
+<style>
+    .title {
+        padding: 15px;
+        margin-top: 8px;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .all-movies-container {
+        width: 1050px;
+        background-color: white;
+        border: 1px solid darkred;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .all-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card {
+        border: 2px solid darkred;
+        border-radius: 5px;
+        padding: 10px;
+        width: calc(50% - 20px); 
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 400px; 
+    }
+
+    .card-title {
+        background-color: darkred;
+        border-radius: 5px;
+        color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-align: center; 
+    }
+
+    .card-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-size: 0.9rem;
+    }
+
+    .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: auto; 
+        padding-top: 10px;
+        border-top: 1px solid darkred;
+    }
+
+    .btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: lightcoral;
+    }
+
+    img {
+        height: 200px; 
+        width: 170px; 
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+    }
+</style>

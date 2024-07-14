@@ -1,0 +1,130 @@
+﻿@model List<SimpleETicketPlatform.Core.Models.Cinemas.CinemaIndexViewModel>
+@{
+    ViewData["Title"] = "All cinemas in the platform";
+}
+<div class="all-cinemas-container">
+    <h6 class="title">@ViewBag.Title</h6>
+    <div class="table-info">
+        <h3><b>Logo</b></h3>
+        <h3><b>Name</b></h3>
+        <h3 class="actions-title"><b>Actions</b></h3>
+    </div>
+    <div class="all-cinemas">
+        @foreach (var cinema in Model)
+        {
+            <div class="cinema-row">
+                <div class="image">
+                    <img src="@cinema.Logo" />
+                </div>
+                <div class="cinema-info">
+                    <h4><b>@cinema.Name</b></h4>
+                    <div class="btns">
+                        <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
+                            <button type="submit" class="btn">Edit</button>
+                        </form>
+                        <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
+                            <button type="submit" class="btn">Details</button>
+                        </form>
+                        <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
+                            <button type="submit" class="btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @await Html.PartialAsync("_AddPartial", "Cinemas")
+</div>
+
+<style>
+    .title {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .btns {
+        display: flex;
+        gap: 20px;
+        padding-left: 50px;
+    }
+
+    .all-cinemas-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .table-info {
+        display: flex;
+        padding: 10px 20px;
+        gap: 40px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        border: 1px solid darkred;
+        margin-bottom: 20px;
+    }
+
+    .actions-title {
+        flex: 1;
+        text-align: center;
+    }
+
+    .cinema-row {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+    }
+
+    .cinema-row:hover {
+        background-color: #f9f9f9;
+    }
+
+    .image {
+        width: 160px;
+        margin-right: 20px;
+    }
+
+    .image img {
+        height: 160px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+
+    .cinema-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cinema-info h4 {
+        margin: 0;
+        color: darkred;
+        font-size: 1.2rem;
+    }
+
+    .btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        background-color: white;
+        border: 1px solid darkred;
+        color: darkred;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: darkred;
+        color: white;
+    }
+</style>

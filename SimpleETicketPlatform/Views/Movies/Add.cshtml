@@ -1,0 +1,90 @@
+﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieFormViewModel
+@{
+	ViewData["Title"] = "Add new movies here:";
+}
+<div class="add-movie-container">
+	<div class="left-items">
+		<form class="post-form" method="post">
+			<div class="form-member">
+				<label asp-for="Name">Name</label>
+				<input asp-for="Name" class="form-control" placeholder="Name..." />
+				<span asp-validation-for="Name" class="validation"></span>
+		    </div>
+			<div class="form-member">
+				<label asp-for="PhotoURL">Photo URL</label>
+				<input asp-for="PhotoURL" class="form-control" placeholder="URL..." />
+				<span asp-validation-for="PhotoURL" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="Price">Price</label>
+				<input asp-for="Price" class="form-control" placeholder="Price..." />
+				<span asp-validation-for="Price" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="StartDate">Start Date</label>
+				<input asp-for="StartDate" class="form-control" placeholder="Start Date..." />
+				<span asp-validation-for="StartDate" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="EndDate">End Date</label>
+				<input asp-for="EndDate" class="form-control" placeholder="End Date..." />
+				<span asp-validation-for="EndDate" class="validation"></span>
+			</div>
+	    </form>
+		
+	</div>
+	<div class="right-items">
+		<form class="post-form" method="post">
+			<div class="form-member">
+				<label asp-for="CinemaId">Cinema</label>
+				<select asp-for="CinemaId" class="form-control" placeholder="Cinema..." asp-items="ViewBag.CinemaId"></select>
+				<span asp-validation-for="CinemaId" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="MovieCategory">Category</label>
+				<select asp-for="MovieCategory" class="form-control" placeholder="Category..."></select>
+				<span asp-validation-for="MovieCategory" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="ProducerId">Producer</label>
+				<select asp-for="ProducerId" class="form-control" placeholder="Producer..." asp-items="ViewBag.ProducerId"></select>
+				<span asp-validation-for="ProducerId" class="validation"></span>
+			</div>
+			<div class="form-member">
+				<label asp-for="ActorIds">Actors</label>
+				<select asp-for="ActorIds" class="form-control" placeholder="Actors..." asp-items="ViewBag.ActorId" multiple></select>
+				<span asp-validation-for="ActorIds" class="validation"></span>
+			</div>
+		</form>
+	</div>
+	<div class="description">
+		<form class="post-form" method="post">
+			<div class="form-member">
+				<label asp-for="Description">Description</label>
+				<input asp-for="Description" class="form-control" placeholder="Description..." />
+				<span asp-validation-for="Description" class="validation"></span>
+			</div>
+		</form>
+	</div>
+	<div class="form-member text-center">
+		<img id="PhotoPreview" />
+	</div>
+	<div class="action-buttons">
+		<form asp-action="Index" asp-controller="Movies" method="get">
+			<button type="submit" class="btn">See All</button>
+		</form>
+		<form asp-action="Add" asp-controller="Movies" method="post">
+			<button type="submit" class="btn">Submit</button>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<script>
+
+
+		$("#PhotoURL").on("change", function () {
+			var output = document.getElementById('PhotoPreview');
+			output.src = $(this).val();
+		});
+	</script>
+}

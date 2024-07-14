@@ -1,0 +1,27 @@
+﻿@model SimpleETicketPlatform.Core.Models.Cinemas.CinemaDetailsViewModel
+@{
+	ViewData["Title"] = "See cinema details here: ";
+}
+<div class="cinema-details-container">
+	<h3 class="title">@ViewBag.Title</h3>
+	<div class="image">
+		<img src="@Model.Logo" />
+	</div>
+	<div class="cinema-description">
+		<div class="cinema-info">
+			<h2><b>Name: </b> <b>@Model.Name</b></h2>
+			<h2><b>Biography: </b> <b>@Model.Description</b></h2>
+		</div>
+		<div class="cinema-movies">
+			<h4>@Model.Name currently shows @Model.MoviesCount:</h4>
+		</div>
+	</div>
+	<div class="action-buttons">
+		<form asp-action="Index" asp-controller="Actors" method="get">
+			<button type="submit" class="btn">See All</button>
+		</form>
+		<form asp-action="Edit" asp-controller="Actors" asp-route-id="@Model.Id" method="get">
+			<button type="submit" class="btn">Edit</button>
+		</form>
+	</div>
+</div>

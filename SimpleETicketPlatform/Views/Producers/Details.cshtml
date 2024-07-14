@@ -1,0 +1,34 @@
+﻿@model SimpleETicketPlatform.Core.Models.Producers.ProducerDetailsViewModel
+@{
+	ViewData["Title"] = "See producer details here: ";
+}
+<div class="producer-details-container">
+	<h3 class="title">@ViewBag.Title</h3>
+	<div class="image">
+		<img src="@Model.ProfilePictureURL" />
+	</div>
+	<div class="producer-description">
+		<div class="producer-info">
+			<h2><b>Name: </b> <b>@Model.FullName</b></h2>
+			<h2><b>Biography: </b> <b>@Model.Biography</b></h2>
+		</div>
+		<div class="producer-movies">
+			<h4>@Model.FullName produced:</h4>
+			@foreach (var movie in Model.Movies)
+			{
+				<h3><b>Name: </b><b>@movie.Name</b> - <b>Category: </b><b>@movie.Category</b></h3>
+				<form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+					<btn type="submit" class="btn">See</btn>
+				</form>
+			}
+		</div>
+	</div>
+	<div class="action-buttons">
+		<form asp-action="Index" asp-controller="Producers" method="get">
+			<button type="submit" class="btn">See All</button>
+		</form>
+		<form asp-action="Edit" asp-controller="Producers" asp-route-id="@Model.Id" method="get">
+			<button type="submit" class="btn">Edit</button>
+		</form>
+	</div>
+</div>

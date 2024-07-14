@@ -1,0 +1,130 @@
+﻿@model List<SimpleETicketPlatform.Core.Models.Producers.ProducerIndexViewModel>
+@{
+    ViewData["Title"] = "All producers in the platform";
+}
+<div class="all-producers-container">
+    <h6 class="title">@ViewBag.Title</h6>
+    <div class="table-info">
+        <h3><b>Profile Picture</b></h3>
+        <h3><b>Full Name</b></h3>
+        <h3 class="actions-title"><b>Actions</b></h3>
+    </div>
+    <div class="all-producers">
+        @foreach (var producer in Model)
+        {
+            <div class="producer-row">
+                <div class="image">
+                    <img src="@producer.ProfilePictureURL" />
+                </div>
+                <div class="producer-info">
+                    <h4><b>@producer.FullName</b></h4>
+                    <div class="btns">
+                        <form asp-controller="Producers" asp-action="Edit" asp-route-id="@producer.Id" method="get">
+                            <button type="submit" class="btn">Edit</button>
+                        </form>
+                        <form asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id" method="get">
+                            <button type="submit" class="btn">Details</button>
+                        </form>
+                        <form asp-controller="Producers" asp-action="Delete" asp-route-id="@producer.Id" method="get">
+                            <button type="submit" class="btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @await Html.PartialAsync("_AddPartial", "Producers")
+</div>
+
+<style>
+    .title {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .btns {
+        display: flex;
+        gap: 20px;
+        padding-left: 50px;
+    }
+
+    .all-producers-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .table-info {
+        display: flex;
+        padding: 10px 20px;
+        gap: 40px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        border: 1px solid darkred;
+        margin-bottom: 20px;
+    }
+
+    .actions-title {
+        flex: 1;
+        text-align: center;
+    }
+
+    .producer-row {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+    }
+
+        .producer-row:hover {
+            background-color: #f9f9f9;
+        }
+
+    .image {
+        width: 160px;
+        margin-right: 20px;
+    }
+
+        .image img {
+            height: 160px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+    .producer-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .producer-info h4 {
+            margin: 0;
+            color: darkred;
+            font-size: 1.2rem;
+        }
+
+    .btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        background-color: white;
+        border: 1px solid darkred;
+        color: darkred;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .btn:hover {
+            background-color: darkred;
+            color: white;
+        }
+</style>

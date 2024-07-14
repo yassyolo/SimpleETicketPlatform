@@ -1,0 +1,45 @@
+﻿
+@model SimpleETicketPlatform.Core.Models.Movies.FilteredMoviesViewModel
+<form class="form-search-engine" asp-controller="Movies" asp-action="Filter" method="get">
+    <div class="search-term">
+        <label asp-for="SearchTerm" class="bold-label">Search Movies</label>
+        <input asp-for="SearchTerm" class="form-control" placeholder="Movie...">
+    </div>
+    <div class="submit">
+        <button type="submit" class="movies-search-btn">Search</button>
+    </div>
+</form>
+<style>
+    .search-engine {
+        display: flex;
+        align-items: center; 
+    }
+
+    .form-search-engine {
+        display: flex; 
+        
+    }
+
+    .form-control{
+        border: 1px solid darkred;
+        margin-bottom: 30px;
+    }
+    .search-term {
+        margin-right: 5px; 
+        width: 200px; 
+    }
+
+    .movies-search-btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 4px 7px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .movies-search-btn:hover{
+       background-color:crimson;
+    }
+</style>

@@ -1,0 +1,131 @@
+﻿@model SimpleETicketPlatform.Core.Models.Actors.ActorFormViewModel
+@{
+    ViewData["Title"] = "Add new actors here:";
+}
+<div class="add-actor-container">
+    <h3>@ViewBag.Title</h3>
+    <form class="post-form" method="post">
+        <div class="form-member">
+            <label asp-for="ProfilePictureURL">Profile Picture URL</label>
+            <input asp-for="ProfilePictureURL" id="ProfilePictureURL" class="form-control" placeholder="URL..." />
+            <span asp-validation-for="ProfilePictureURL" class="validation"></span>
+            <img id="ProfilePicturePreview" src="@Model.ProfilePictureURL" />
+        </div>
+        <div class="form-member">
+            <label asp-for="FullName">Full Name</label>
+            <input asp-for="FullName" class="form-control" placeholder="Full Name..." />
+            <span asp-validation-for="FullName" class="validation"></span>
+        </div>
+        
+        <div class="form-member">
+            <label asp-for="Biography">Biography</label>
+            <textarea asp-for="Biography" class="form-control higher-textarea" placeholder="Biography..." rows="6"></textarea>
+            <span asp-validation-for="Biography" class="validation"></span>
+        </div>
+        <div class="action-buttons">
+            <form asp-action="Index" asp-controller="Actors" method="get">
+                <button type="submit" class="btn">See All Actors</button>
+            </form>
+            <button type="submit" class="btn">Submit</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function updatePreview(url) {
+                $("#ProfilePicturePreview").attr("src", url);
+            }
+
+            updatePreview($("#ProfilePictureURL").val());
+
+            $("#ProfilePictureURL").on("input", function () {
+                var url = $(this).val();
+                updatePreview(url);
+            });
+        });
+        
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .add-actor-container {
+        width: 800px;
+        background-color: white;
+        margin: auto;
+        border: 2px solid darkred;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    h3 {
+        color: darkred;
+        margin-bottom: 20px;
+    }
+
+    .post-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-member {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+        .form-member label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    .form-control,
+    .higher-textarea {
+        height: 30px;
+        border: 1px solid darkred;
+        border-radius: 3px;
+        padding: 5px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .higher-textarea {
+        height: 90px; 
+        resize: vertical; 
+    }
+
+    img#ProfilePicturePreview {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+
+    .validation {
+        color: red;
+    }
+
+    .btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+         background-color: #e91e63;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+</style>

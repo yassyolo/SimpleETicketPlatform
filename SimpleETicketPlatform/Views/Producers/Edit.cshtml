@@ -1,0 +1,48 @@
+﻿@model SimpleETicketPlatform.Core.Models.Producers.ProducerFormViewModel
+@{
+	ViewData["Title"] = "Edit producer here:";
+}
+<div class="edit-producer-container">
+	<h3>@ViewBag.Title</h3>
+	<form class="post-form" method="post">
+		<div class="form-member text-center">
+			<img id="ProfilePicturePreview" />
+		</div>
+		<div class="form-member">
+			<label asp-for="ProfilePictureURL">Profile Picture URL</label>
+			<input asp-for="ProfilePictureURL" class="form-control" placeholder="URL..." />
+			<span asp-validation-for="ProfilePictureURL" class="validation"></span>
+		</div>
+		<div class="form-member">
+			<label asp-for="FullName">Full Name</label>
+			<input asp-for="FullName" class="form-control" placeholder="Full Name..." />
+			<span asp-validation-for="FullName" class="validation"></span>
+		</div>
+		<div class="form-member">
+			<label asp-for="Biography">Biography</label>
+			<input asp-for="Biography" class="form-control" placeholder="Biography..." />
+			<span asp-validation-for="Biography" class="validation"></span>
+		</div>
+		<div class="action-buttons">
+			<form asp-action="Index" asp-controller="Producers" method="get">
+				<button type="submit" class="btn">See All</button>
+			</form>
+			<form asp-action="Edit" asp-controller="Producers" asp-route-id="@Model.Id" method="post">
+				<button type="submit" class="btn">Submit</button>
+			</form>
+		</div>
+	</form>
+</div>
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			var output = document.getElementById('ProfilePicturePreview');
+			output.src = $("#ProfilePictureURL").val();
+		});
+
+		$("#ProfilePictureURL").on("change", function () {
+			var output = document.getElementById('ProfilePicturePreview');
+			output.src = $(this).val();
+		});
+	</script>
+}
