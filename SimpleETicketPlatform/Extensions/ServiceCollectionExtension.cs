@@ -2,6 +2,7 @@
 using SimpleETicketPlatform.Core.Contacts;
 using SimpleETicketPlatform.Core.Services;
 using SimpleETicketPlatform.Infrastructure.Data;
+using SimpleETicketPlatform.Infrastructure.Repository;
 
 namespace SimpleETicketPlatform.Extensions
 {
@@ -13,12 +14,16 @@ namespace SimpleETicketPlatform.Extensions
             services.AddScoped<IProducersService, ProducersService>();
             services.AddScoped<ICinemasService, CinemasService>();
             services.AddScoped<IMoviesService, MoviesService>();
-            return services;
+			services.AddScoped<IShoppingCartService, ShoppingCartService>();
+			return services;
         }
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration config)
         {
+            var connectionStr = config.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>
-                (options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                (options => options.UseSqlServer(connectionStr));
+
+            services.AddScoped<IRepository, Repository>();
             return services;
         }
     }

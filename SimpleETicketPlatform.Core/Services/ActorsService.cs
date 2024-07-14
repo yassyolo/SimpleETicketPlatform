@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleETicketPlatform.Core.Contacts;
+using SimpleETicketPlatform.Core.CustomExceptions;
 using SimpleETicketPlatform.Core.Models.Actors;
+using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
 using SimpleETicketPlatform.Infrastructure.Repository;
 
@@ -15,9 +17,61 @@ namespace SimpleETicketPlatform.Core.Services
             this.repository = repository;
         }
 
-        public async Task<List<ActorIndexViewModel?>> GetAllActorsAsync()
+		public async Task<bool> ActorExistsByIdAsync(int id)
+		{
+            return await repository.AllReadOnly<Actor>().AnyAsync(x => x.Id == id);
+		}
+
+		public async Task AddNewActorAsync(ActorFormViewModel model)
+		{
+            var actor = new Actor()
+            {
+                Biography = model.Biography,
+                FullName = model.FullName,
+                ProfilePictureURL = model.ProfilePictureURL
+            };
+            await repository.AddAsync(actor);
+            await repository.SaveChangesAsync();
+		}
+
+		public async Task DeleteActorAsync(int id)
+		{
+            var actor = await repository.All<Actor>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            await repository.DeleteAsync(actor);
+		}
+
+		public async Task EditActorAsync(int id, ActorFormViewModel model)
+		{
+            var actor = await repository.All<Actor>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            actor.FullName = model.FullName;
+            actor.Biography = model.Biography;
+            actor.ProfilePictureURL = model.ProfilePictureURL;
+            await repository.SaveChangesAsync();
+		}
+
+		public async Task<ActorFormViewModel?> GetActorForEditAsync(int id)
+		{
+            return await repository.AllReadOnly<Actor>().Where(x => x.Id == id)
+                .Select(x => new ActorFormViewModel()
+                {
+                    Id = x.Id,
+                    ProfilePictureURL = x.ProfilePictureURL,
+                    FullName = x.FullName,
+                    Biography = x.Biography
+                })
+                .FirstOrDefaultAsync();
+		}
+
+		public async Task<FilteredActorsViewModel> GetAllActorsAsync(string searchTerm)
         {
-            return await repository.AllReadOnly<Actor>()
+            var actors =  repository.AllReadOnly<Actor>();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var normalizedSearchTerm = searchTerm.ToLower();
+                actors = actors.Where(x => x.FullName.Contains(normalizedSearchTerm));
+            }
+            var actorsToShow =  await actors
                 .Select(x => new ActorIndexViewModel()
                 {
                     Id = x.Id,
@@ -25,6 +79,48 @@ namespace SimpleETicketPlatform.Core.Services
                     Biography = x.Biography,
                     ProfilePictureURL = x.ProfilePictureURL
                 }).ToListAsync();
+            return new FilteredActorsViewModel()
+            {
+                Actors = actorsToShow,
+                ActorsMatched = actorsToShow.Count()
+            };
         }
-    }
+
+		public async Task<ActorDetailsViewModel?> GetDetailsForActorAsync(int id)
+		{
+            var actor = await repository.AllReadOnly<Actor>().
+                Where(x => x.Id == id).
+                Select(x => new ActorDetailsViewModel()
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Biography = x.Biography,
+                    ProfilePictureURL = x.ProfilePictureURL
+                }).FirstOrDefaultAsync();
+            var moviesForActor = await repository.AllReadOnly<MovieActor>()
+                .Where(x => x.ActorId == id)
+                .Select(x => new MovieIndexViewModel()
+                {
+                    Id = x.MovieId,
+                    Name = GetMovieNameAndCategoryId(id).Result.Name,
+                    Category = GetMovieNameAndCategoryId(id).Result.Category
+				})
+                .ToListAsync();
+            actor.Movies = moviesForActor;
+            return actor;
+		}
+
+		private async Task<(string Name, string Category)> GetMovieNameAndCategoryId(int id)
+		{
+            var result = await repository.AllReadOnly<Movie>()
+                .Where(x => x.Id == id)
+                .Select(x => new { x.Name, x.MovieCategory})
+                .FirstOrDefaultAsync();
+            if (result == null)
+            {
+                throw new MovieDoesNotExistException("Movie does not exist.");
+            }
+            return (result.Name, result.MovieCategory.ToString());
+		}
+	}
 }
