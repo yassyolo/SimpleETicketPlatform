@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleETicketPlatform.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SimpleETicketPlatform.Infrastructure.Data;
 namespace SimpleETicketPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714233059_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,16 +348,6 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
                         new
                         {
                             MovieId = 3,
-                            ActorId = 6
-                        },
-                        new
-                        {
-                            MovieId = 4,
-                            ActorId = 1
-                        },
-                        new
-                        {
-                            MovieId = 5,
                             ActorId = 6
                         });
                 });

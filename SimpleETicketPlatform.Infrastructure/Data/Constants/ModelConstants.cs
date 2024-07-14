@@ -40,5 +40,10 @@
             public const int ProfilePictureURLMaxLength = 255;
             public const int ProfilePictureURLMinLength = 0;
         }
-    }
+		public static class OrderItem
+		{
+			public const string PriceMinValue = "0.0";
+			public const string PriceMaxValue = "10000.0";
+		}
+	}
 }

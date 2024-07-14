@@ -18,6 +18,7 @@ namespace SimpleETicketPlatform.Infrastructure.Data
 			builder.ApplyConfiguration(new MovieConfiguration());
 			builder.ApplyConfiguration(new ActorConfiguration());
 			builder.ApplyConfiguration(new MovieActorConfiguration());
+            builder.ApplyConfiguration(new OrderItemConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -27,5 +28,8 @@ namespace SimpleETicketPlatform.Infrastructure.Data
         public DbSet<Movie> Movies { get; set; } = null!;
         public DbSet<MovieActor> MovieActors { get; set; } = null!;
         public DbSet<Producer> Producers { get; set; } = null!;
-    }
+		public DbSet<Order> Orders { get; set; } = null!;
+		public DbSet<OrderItem> OrderItems { get; set; } = null!;
+		public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; } = null!;
+	}
 }
