@@ -27,17 +27,17 @@ body::before {
 }
 
 .menu {
-    background-color: white; 
+    background-color: white;
     max-width: 1170px;
-    height:80px;
+    height: 80px;
     margin: 20px auto;
     z-index: 100;
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 0 15px; 
+    /*justify-content: space-between;*/
+    align-items: center;
+    padding: 0 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius:3px;
+    border-radius: 3px;
 }
 
 .container {
@@ -84,6 +84,7 @@ body::before {
     flex-direction: row;
     gap: 15px;
     text-decoration: none;
+    margin-left:20px;
 }
 
 .movies {
@@ -94,29 +95,32 @@ body::before {
     display: flex;
     gap: 20px;
     text-decoration: none;
-    margin-left: 300px; 
-    margin-top:20px;
+    margin-left: 340px; 
 }
 
 .dropdown {
     color: darkred;
 }
 
-.management-button {
-    background-color: darkred; 
-    color: white; 
-    font-size: 16px; 
-    padding: 8px 14px; 
-    line-height: 1.5; 
-    border-color: darkred; 
-}
-
-.management-button:hover {
-    background-color: crimson;
+.management-button, .account-button, .cart-button {
+    background-color: darkred;
     color: white;
-    border-color: crimson;
+    font-size: 16px;
+    padding: 8px 14px;
+    line-height: 1.5;
+    border-color: darkred;
 }
-
+.account-button {
+    padding: 8px 9px;
+}
+    .cart-button{
+        margin-top:30px;
+    }
+    .management-button:hover, .account-button:hover {
+        background-color: crimson;
+        color: white;
+        border-color: crimson;
+    }
 .dropdown-menu {
     border: 1px solid darkred;
 }

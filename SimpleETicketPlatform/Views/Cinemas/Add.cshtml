@@ -1,48 +1,137 @@
 ﻿@model SimpleETicketPlatform.Core.Models.Cinemas.CinemaFormViewModel
 @{
-	ViewData["Title"] = "Add new cinemas here:";
+    ViewData["Title"] = "Add new cinemas here:";
 }
-<div class="add-cinema-container">
-	<h3>@ViewBag.Title</h3>
-	<form class="post-form" method="post">
-		<div class="form-member text-center">
-			<img id="ProfilePicturePreview" />
-		</div>
-		<div class="form-member">
-			<label asp-for="Logo">Logo URL</label>
-			<input asp-for="Logo" class="form-control" placeholder="URL..." />
-			<span asp-validation-for="Logo" class="validation"></span>
-		</div>
-		<div class="form-member">
-			<label asp-for="Name">Name</label>
-			<input asp-for="Name" class="form-control" placeholder="Name..." />
-			<span asp-validation-for="Name" class="validation"></span>
-		</div>
-		<div class="form-member">
-			<label asp-for="Description">Description</label>
-			<input asp-for="Description" class="form-control" placeholder="Description..." />
-			<span asp-validation-for="Description" class="validation"></span>
-		</div>
-		<div class="action-buttons">
-			<form asp-action="Index" asp-controller="Cinemas" method="get">
-				<button type="submit" class="btn">See All</button>
-			</form>
-			<form asp-action="Add" asp-controller="Cinemas" asp-route-id="@Model.Id" method="post">
-				<button type="submit" class="btn">Submit</button>
-			</form>
-		</div>
-	</form>
-</div>
-@section Scripts {
-	<script>
-		$(document).ready(function () {
-			var output = document.getElementById('ProfilePicturePreview');
-			output.src = $("#Logo").val();
-		});
 
-		$("#Logo").on("change", function () {
-			var output = document.getElementById('ProfilePicturePreview');
-			output.src = $(this).val();
-		});
-	</script>
+<div class="add-container">
+    <h2>@ViewData["Title"]</h2>
+    <form class="post-form" method="post" asp-action="Add" asp-controller="Cinemas">
+        <div class="form-member text-center">
+            <img id="ProfilePicturePreview" src="@Model.Logo" />
+        </div>
+        <div class="form-member">
+            <label asp-for="Logo">Logo URL</label>
+            <input asp-for="Logo" class="form-control" placeholder="URL..">
+            <span asp-validation-for="Logo" class="validation"></span>
+        </div>
+        <div class="form-member">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Name..">
+            <span asp-validation-for="Name" class="validation"></span>
+        </div>
+        <div class="form-member">
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" class="form-control" placeholder="Description..">
+            <span asp-validation-for="Description" class="validation"></span>
+        </div>
+        <div class="action-buttons">
+        
+                <a asp-action="Index" asp-controller="Cinemas" method="get" class="btn btn-primary">See All Cinemas</a>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+</div>
+
+<style>
+    .add-container {
+        /*height: 800px;*/
+        width: 700px;
+        background-color: white;
+        margin: auto;
+        border: 2px solid darkred;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-top:3px;
+    }
+
+    h2 {
+        color: darkred;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .post-form {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        height: 80%;
+    }
+
+    .form-member {
+        margin-bottom: 20px;
+    }
+
+        .form-member label {
+            font-weight: bold;
+        }
+
+        .form-member input {
+            align-content: center;
+            justify-content: center;
+            width: 95%;
+            height: 30px;
+            border: 1px solid darkred;
+            border-radius: 3px;
+        }
+
+    .form-select {
+        width: 85%;
+        border: 1px solid darkred;
+        border-radius: 3px;
+    }
+
+    input.form-control[name="Description"] {
+        height: 90px;
+    }
+
+    .validation {
+        color: red;
+    }
+
+    .btn-primary {
+        background-color: darkred;
+        border-color: darkred;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: crimson;
+            border-color: crimson;
+        }
+
+    .action-buttons {
+        max-width: 630px;
+        display: flex;
+        gap: 410px;
+    }
+
+    #ProfilePicturePreview {
+        max-width: 300px;
+        height: 300px;
+        margin-top: 10px;
+    }
+</style>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function updatePreview(url) {
+                $("#ProfilePicturePreview").attr("src", url);
+            }
+
+            updatePreview($("#Logo").val());
+
+            $("#Logo").on("input", function () {
+                var url = $(this).val();
+                updatePreview(url);
+            });
+
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
 }

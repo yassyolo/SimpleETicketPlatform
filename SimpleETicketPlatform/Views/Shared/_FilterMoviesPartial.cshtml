@@ -2,11 +2,14 @@
 @model SimpleETicketPlatform.Core.Models.Movies.FilteredMoviesViewModel
 <form class="form-search-engine" asp-controller="Movies" asp-action="Filter" method="get">
     <div class="search-term">
-        <label asp-for="SearchTerm" class="bold-label">Search Movies</label>
-        <input asp-for="SearchTerm" class="form-control" placeholder="Movie...">
+        <input asp-for="SearchTerm" class="form-control" placeholder="Search Movies...">
     </div>
     <div class="submit">
-        <button type="submit" class="movies-search-btn">Search</button>
+        <button type="submit" class="movies-search-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+        </button>
     </div>
 </form>
 <style>
@@ -17,12 +20,12 @@
 
     .form-search-engine {
         display: flex; 
-        
     }
 
     .form-control{
         border: 1px solid darkred;
-        margin-bottom: 30px;
+        padding: 5px;
+        height:40px;
     }
     .search-term {
         margin-right: 5px; 
@@ -33,7 +36,7 @@
         background-color: darkred;
         color: white;
         border: none;
-        padding: 4px 7px;
+        padding: 8px 7px;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s;

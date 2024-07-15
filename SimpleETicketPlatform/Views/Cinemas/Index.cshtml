@@ -1,111 +1,159 @@
-﻿@model List<SimpleETicketPlatform.Core.Models.Cinemas.CinemaIndexViewModel>
+﻿@model SimpleETicketPlatform.Core.Models.Cinemas.FilteredCinemasViewModel
 @{
-    ViewData["Title"] = "All cinemas in the platform";
+    ViewData["Title"] = "Check out the cinemas in our platform!";
 }
 <div class="all-cinemas-container">
-    <h6 class="title">@ViewBag.Title</h6>
+    <h3 class="title">@ViewBag.Title</h3>
     <div class="table-info">
-        <h3><b>Logo</b></h3>
-        <h3><b>Name</b></h3>
-        <h3 class="actions-title"><b>Actions</b></h3>
-    </div>
-    <div class="all-cinemas">
-        @foreach (var cinema in Model)
-        {
-            <div class="cinema-row">
-                <div class="image">
-                    <img src="@cinema.Logo" />
+        <div class="search-engine">
+            <form class="form-search-engine" asp-controller="Cinemas" asp-action="Index" method="get">
+                <div class="search-term">
+                    <label asp-for="SearchTerm" class="bold-label">Search Cinemas</label>
+                    <input asp-for="SearchTerm" class="form-control" placeholder="Cinema name...">
                 </div>
-                <div class="cinema-info">
-                    <h4><b>@cinema.Name</b></h4>
-                    <div class="btns">
-                        <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
-                            <button type="submit" class="btn">Edit</button>
-                        </form>
-                        <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
-                            <button type="submit" class="btn">Details</button>
-                        </form>
-                        <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
-                            <button type="submit" class="btn">Delete</button>
-                        </form>
+                <div class="submit">
+                    <button type="submit" class="btn-search">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (Model.Cinemas.Any())
+    {
+        <div class="all-cinemas">
+            @foreach (var cinema in Model.Cinemas)
+            {
+                <div class="cinema-row">
+                    <div class="image">
+                        <img src="@cinema.Logo" />
+                    </div>
+                    <div class="cinema-info">
+                        <h4><b>@cinema.Name</b></h4>
+                        @if (!string.IsNullOrEmpty(cinema.Description) && cinema.Description.Length > 100)
+                        {
+                            <p class="description">@cinema.Description.Substring(0, 100)... <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">Read more</a></p>
+                        }
+                        else
+                        {
+                            <p class="description">@cinema.Description</p>
+                        }
+                        <div class="btns">
+                            <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
+                                <button type="submit" class="btn">Edit</button>
+                            </form>
+                            <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
+                                <button type="submit" class="btn">Details</button>
+                            </form>
+                            <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
+                                <button type="submit" class="btn">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h5>@Model.CinemasMatched cinemas matched your search!</h5>
+    }
+
     @await Html.PartialAsync("_AddPartial", "Cinemas")
 </div>
 
 <style>
     .title {
-        padding: 20px;
+        margin-top: 10px;
+        padding-bottom: 10px;
+        font-size: 35px;
         text-align: center;
-    }
-
-    .btns {
-        display: flex;
-        gap: 20px;
-        padding-left: 50px;
-    }
-
-    .all-cinemas-container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+        color: darkred;
+        border-bottom: 2px solid darkred;
     }
 
     .table-info {
         display: flex;
-        padding: 10px 20px;
-        gap: 40px;
+        justify-content: space-between;
+        padding: 10px 30px;
+        color: darkred;
+        border-top: 1px solid darkred;
+        border-bottom: 1px solid darkred;
         background-color: #f5f5f5;
-        border-radius: 5px;
-        border: 1px solid darkred;
-        margin-bottom: 20px;
     }
 
-    .actions-title {
-        flex: 1;
-        text-align: center;
+    .search-engine {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-search-engine {
+        display: flex;
+    }
+
+    .search-term {
+        margin-right: 10px;
+        max-width: 200px;
+    }
+
+    .submit {
+        flex-shrink: 0;
+    }
+
+    .all-cinemas-container {
+        max-width: 1100px;
+        background-color: white;
+        border: 2px solid darkred;
+        border-radius: 7px;
+        margin: 20px auto;
+        padding: 20px;
     }
 
     .cinema-row {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #ddd;
-        padding: 10px 20px;
+        padding: 20px 30px;
+        border-bottom: 1px solid darkred;
         transition: background-color 0.3s;
     }
 
-    .cinema-row:hover {
-        background-color: #f9f9f9;
-    }
+        .cinema-row:hover {
+            background-color: #f5f5f5;
+        }
 
-    .image {
-        width: 160px;
+    .image img {
+        height: 170px;
+        width: 145px;
+        border: 1px solid darkred;
+        border-radius: 3px;
+        padding: 5px;
         margin-right: 20px;
     }
 
-    .image img {
-        height: 160px;
-        width: 100%;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        object-fit: cover;
-    }
-
     .cinema-info {
-        flex: 1;
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
     }
 
-    .cinema-info h4 {
-        margin: 0;
-        color: darkred;
-        font-size: 1.2rem;
+        .cinema-info h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: darkred;
+        }
+
+    .description {
+        margin: 10px 0;
+        font-size: 1rem;
+        max-width: 600px;
     }
+
+        .description a {
+            color: darkred;
+            text-decoration: none;
+        }
+
+            .description a:hover {
+                text-decoration: underline;
+            }
 
     .btns {
         display: flex;
@@ -114,17 +162,27 @@
     }
 
     .btn {
-        background-color: white;
-        border: 1px solid darkred;
-        color: darkred;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .btn:hover {
         background-color: darkred;
         color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn:hover {
+            background-color: crimson;
+        }
+
+    .btn-search {
+        margin-top: 25px;
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 6px 11px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
     }
 </style>

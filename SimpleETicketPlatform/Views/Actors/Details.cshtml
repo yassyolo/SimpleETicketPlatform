@@ -3,33 +3,38 @@
     ViewData["Title"] = "See actor details here: ";
 }
 <div class="actor-details-container">
-    <h3 class="title">@ViewBag.Title</h3>
+    <h2 class="title">@ViewBag.Title</h2>
     <div class="card">
-        <div class="name-image">
+        <div class="name">
+            <h3><b>Name: </b> @Model.FullName</h3>
+        </div>
+        <div class="bio-image">
         <div class="image">
             <img src="@Model.ProfilePictureURL" />
         </div>
-        <h2><b>Name: </b> <b>@Model.FullName</b></h2>
-        </div>
-        <div class="actor-description">
-            <div class="actor-info">
-                
-                <h2><b>Biography: </b> <b>@Model.Biography</b></h2>
-            </div>
+            <p class="biography"><b>Biography: </b> @Model.Biography</p>
+        </div>         
+ 
             <div class="actor-movies">
-                <h4>@Model.FullName stars in:</h4>
+                <h6>@Model.FullName stars in:</h6>
                 @foreach (var movie in Model.Movies)
                 {
-                    <h3><b>Name: </b><b>@movie.Name</b> - <b>Category: </b><b>@movie.Category</b></h3>
+                    <div class="movie-row">
+                    <h5><b>Name: </b>@movie.Name (@movie.Category)</h5>
                     <form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
-                        <button type="submit" class="btn">See</button>
+                        <button type="submit" class="btn" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </button>
                     </form>
+                    </div>
                 }
             </div>
-        </div>
+        
         <div class="action-buttons">
             <form asp-action="Index" asp-controller="Actors" method="get">
-                <button type="submit" class="btn">See All</button>
+                <button type="submit" class="btn">See All Actors</button>
             </form>
             <form asp-action="Edit" asp-controller="Actors" asp-route-id="@Model.Id" method="get">
                 <button type="submit" class="btn">Edit</button>
@@ -57,31 +62,36 @@
     .card {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
         border: 2px solid darkred;
         border-radius: 5px;
-        padding: 20px;
         width: 60%;
         box-sizing: border-box;
         background-color: white;
-        margin: 20px 0;
+        margin: 15px 0;
     }
-    .name-image{
+    .name{
+        color:white;
+        background-color: darkred;
+        width: 100%;
+        text-align: center;
+    }
+    .bio-image{
         display:flex;
         align-content:space-between;
-        gap:50px;
+        gap:20px;
     }
     .image {
         flex-shrink: 0;
-        margin-right: 20px;
+        margin: 20px 0px 20px 20px;
     }
-
+    .biography{
+        margin: 20px 20px 20px 20px;
+    }
     .image img {
         height: 250px;
         width: 210px;
         border: 1px solid darkred;
         border-radius: 4px;
-        padding: 5px;
     }
 
     .actor-description {
@@ -92,7 +102,8 @@
     }
 
     .actor-movies {
-        margin-top: 20px;
+        padding: 20px 20px 20px 20px;
+        width:100%;
     }
 
     .btns {
@@ -108,7 +119,7 @@
         background-color: darkred;
         color: white;
         border: none;
-        padding: 9px 18px;
+        padding: 7px 14px;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -120,7 +131,16 @@
 
     .action-buttons {
         display: flex;
-        gap: 20px;
-        margin-top: 20px;
+        gap: 50px;
+        margin-top: 30px;
+        margin-bottom:20px;
+        margin-left:20px;
+        width:100%;
+    }
+
+    .movie-row{
+        display: flex;
+        gap:30px;
+        margin-top:20px;
     }
 </style>

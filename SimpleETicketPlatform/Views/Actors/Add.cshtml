@@ -2,35 +2,118 @@
 @{
     ViewData["Title"] = "Add new actors here:";
 }
-<div class="add-actor-container">
-    <h3>@ViewBag.Title</h3>
-    <form class="post-form" method="post">
-        <div class="form-member">
-            <label asp-for="ProfilePictureURL">Profile Picture URL</label>
-            <input asp-for="ProfilePictureURL" id="ProfilePictureURL" class="form-control" placeholder="URL..." />
-            <span asp-validation-for="ProfilePictureURL" class="validation"></span>
+
+<div class="add-container">
+    <h2>@ViewData["Title"]</h2>
+    <form class="post-form" method="post" asp-action="Add" asp-controller="Actors">
+        <div class="form-member text-center">
             <img id="ProfilePicturePreview" src="@Model.ProfilePictureURL" />
         </div>
         <div class="form-member">
+            <label asp-for="ProfilePictureURL">Profile Picture URL</label>
+            <input asp-for="ProfilePictureURL" class="form-control" placeholder="URL..">
+            <span asp-validation-for="ProfilePictureURL" class="validation"></span>
+        </div>
+        <div class="form-member">
             <label asp-for="FullName">Full Name</label>
-            <input asp-for="FullName" class="form-control" placeholder="Full Name..." />
+            <input asp-for="FullName" class="form-control" placeholder="Full Name..">
             <span asp-validation-for="FullName" class="validation"></span>
         </div>
-        
         <div class="form-member">
             <label asp-for="Biography">Biography</label>
-            <textarea asp-for="Biography" class="form-control higher-textarea" placeholder="Biography..." rows="6"></textarea>
+            <input asp-for="Biography" class="form-control" placeholder="Biography..">
             <span asp-validation-for="Biography" class="validation"></span>
         </div>
         <div class="action-buttons">
-            <form asp-action="Index" asp-controller="Actors" method="get">
-                <button type="submit" class="btn">See All Actors</button>
-            </form>
-            <button type="submit" class="btn">Submit</button>
+                <a asp-action="Index" asp-controller="Actors" method="get" class="btn btn-primary">See All Actors</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+
 </div>
 
+<style>
+    .add-container {
+        /*height: 800px;*/
+        width: 700px;
+        background-color: white;
+        margin: auto;
+        border: 2px solid darkred;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-top:3px;
+    }
+
+    h2 {
+        color: darkred;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .post-form {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        height: 80%;
+    }
+
+    .form-member {
+        margin-bottom: 20px;
+    }
+
+        .form-member label {
+            font-weight: bold;
+        }
+
+        .form-member input {
+            align-content: center;
+            justify-content: center;
+            width: 95%;
+            height: 30px;
+            border: 1px solid darkred;
+            border-radius: 3px;
+        }
+
+    .form-select {
+        width: 85%;
+        border: 1px solid darkred;
+        border-radius: 3px;
+    }
+
+    input.form-control[name="Description"] {
+        height: 90px;
+    }
+
+    .validation {
+        color: red;
+    }
+
+    .btn-primary {
+        background-color: darkred;
+        border-color: darkred;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: crimson;
+            border-color: crimson;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 430px;
+    }
+
+    #ProfilePicturePreview {
+        max-width: 300px;
+        height: 300px;
+        margin-top: 10px;
+    }
+</style>
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -44,88 +127,8 @@
                 var url = $(this).val();
                 updatePreview(url);
             });
+
         });
-        
     </script>
     <partial name="_ValidationScriptsPartial" />
 }
-
-<style>
-    .add-actor-container {
-        width: 800px;
-        background-color: white;
-        margin: auto;
-        border: 2px solid darkred;
-        border-radius: 5px;
-        padding: 20px;
-        text-align: center;
-        margin-top: 5px;
-    }
-
-    h3 {
-        color: darkred;
-        margin-bottom: 20px;
-    }
-
-    .post-form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-member {
-        margin-bottom: 20px;
-        text-align: left;
-    }
-
-        .form-member label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-    .form-control,
-    .higher-textarea {
-        height: 30px;
-        border: 1px solid darkred;
-        border-radius: 3px;
-        padding: 5px;
-        box-sizing: border-box;
-        width: 100%;
-        max-width: 800px;
-    }
-
-    .higher-textarea {
-        height: 90px; 
-        resize: vertical; 
-    }
-
-    img#ProfilePicturePreview {
-        max-width: 100%;
-        height: auto;
-        margin-top: 10px;
-    }
-
-    .validation {
-        color: red;
-    }
-
-    .btn {
-        background-color: darkred;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .btn:hover {
-         background-color: #e91e63;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 20px;
-        margin-top: 20px;
-    }
-</style>

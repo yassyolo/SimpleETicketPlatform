@@ -3,8 +3,8 @@
     ViewData["Title"] = "Edit actor here:";
 }
 <div class="edit-actor-container">
-    <h3>@ViewBag.Title</h3>
-    <form asp-action="Edit" asp-controller="Actors" asp-route-id="@Model.Id" method="post">
+    <h2>@ViewBag.Title</h2>
+    <form class="post-form" method="post" asp-action="Edit" asp-controller="Actors">
         <div class="form-member text-center">
             <img id="ProfilePicturePreview" src="@Model.ProfilePictureURL" />
         </div>
@@ -20,16 +20,14 @@
         </div>
         <div class="form-member">
             <label asp-for="Biography">Biography</label>
-            <textarea asp-for="Biography" class="form-control" placeholder="Biography..." rows="4"></textarea>
+            <input asp-for="Biography" class="form-control" placeholder="Biography..." rows="4"/>
             <span asp-validation-for="Biography" class="validation"></span>
         </div>
         <div class="action-buttons">
             <form asp-action="Index" asp-controller="Actors" method="get">
                 <button type="submit" class="btn">See All</button>
             </form>
-            <form asp-action="Edit" asp-controller="Actors" asp-route-id="@Model.Id" method="post">
                 <button type="submit" class="btn">Submit</button>
-            </form>
         </div>
     </form>
 </div>
@@ -37,7 +35,6 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Function to update image preview
             function updatePreview(url) {
                 $("#ProfilePicturePreview").attr("src", url);
             }
@@ -45,62 +42,68 @@
             // Initial preview update
             updatePreview($("#ProfilePictureURL").val());
 
-            // Event listener for input change
             $("#ProfilePictureURL").on("input", function () {
                 var url = $(this).val();
                 updatePreview(url);
             });
         });
-        @await Html.PartialAsync("_ValidationScriptsPartial")
+       
     </script>
+    <partial name="_ValidationScriptsPartial" />
 }
 
 <style>
     .edit-actor-container {
-        width: 800px;
+        width: 700px;
         background-color: white;
         margin: auto;
         border: 2px solid darkred;
         border-radius: 5px;
-        padding: 20px;
-        text-align: center;
-        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-top: 3px;
     }
 
-    h3 {
+    h2 {
         color: darkred;
-        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 10px;
     }
 
     .post-form {
         display: flex;
         flex-direction: column;
+        padding: 10px;
+        height: 80%;
     }
+
 
     .form-member {
         margin-bottom: 20px;
-        text-align: left;
     }
 
-    .form-member label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
+        .form-member label {
+            font-weight: bold;
+        }
 
-    .form-control {
-        height: 30px;
+        .form-member input {
+            align-content: center;
+            justify-content: center;
+            width: 95%;
+            height: 30px;
+            border: 1px solid darkred;
+            border-radius: 3px;
+        }
+
+    .form-select {
+        width: 85%;
         border: 1px solid darkred;
         border-radius: 3px;
-        padding: 5px;
-        box-sizing: border-box;
-        width: 100%;
-        max-width: 800px; 
     }
 
-    textarea.form-control {
-        height: auto; 
-        resize: vertical; 
+    input.form-control[name="Description"] {
+        height: 90px;
     }
 
     .validation {
