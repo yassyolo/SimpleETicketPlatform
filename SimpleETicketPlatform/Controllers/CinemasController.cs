@@ -13,10 +13,12 @@ namespace SimpleETicketPlatform.Controllers
             this.cinemaService = cinemaService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteredCinemasViewModel query)
         {
-            var model = await cinemaService.GetAllCinemasAsync();
-            return View(model);
+            var model = await cinemaService.GetAllCinemasAsync(query.SearchTerm);
+            query.CinemasMatched = model.CinemasMatched;
+            query.Cinemas = model.Cinemas;
+            return View(query);
         }
         [HttpGet]
         public IActionResult Add()
@@ -79,7 +81,7 @@ namespace SimpleETicketPlatform.Controllers
 				TempData["Message"] = "Cinema does not exist!";
 				return RedirectToAction("NotFound", "Home");
 			}
-            var model = new CinemaIndexViewModel();
+            var model = await cinemaService.GetCinemaForDeleteAsync(id);
             return View(model);
 		}
 		[HttpPost]

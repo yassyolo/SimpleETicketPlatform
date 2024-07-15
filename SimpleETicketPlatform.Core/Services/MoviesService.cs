@@ -25,8 +25,8 @@ namespace SimpleETicketPlatform.Core.Services
 				{
 					Id = x.Id,
 					Name = x.Name,
-					StartDate = x.StartDate.ToString("dd-mm-yyyy"),
-					EndDate = x.StartDate.ToString("dd-mm-yyyy"),
+					StartDate = x.StartDate.ToString("dd-MM-yyyy"),
+					EndDate = x.EndDate.ToString("dd-MM-yyyy"),
 					PhotoURL = x.PhotoURL,
 					CinemaName = x.Cinema.Name,
 					MovieCategory = x.MovieCategory.ToString(),

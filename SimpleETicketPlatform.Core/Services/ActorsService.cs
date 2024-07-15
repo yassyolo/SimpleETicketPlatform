@@ -49,6 +49,17 @@ namespace SimpleETicketPlatform.Core.Services
             await repository.SaveChangesAsync();
 		}
 
+		public async Task<ActorIndexViewModel?> GetActorForDeleteAsync(int id)
+		{
+			return await repository.AllReadOnly<Actor>().Where(x => x.Id == id)
+				.Select(x => new ActorIndexViewModel()
+				{
+					Id = x.Id,
+					FullName = x.FullName,
+				})
+				.FirstOrDefaultAsync();
+		}
+
 		public async Task<ActorFormViewModel?> GetActorForEditAsync(int id)
 		{
             return await repository.AllReadOnly<Actor>().Where(x => x.Id == id)
@@ -95,32 +106,18 @@ namespace SimpleETicketPlatform.Core.Services
                     Id = x.Id,
                     FullName = x.FullName,
                     Biography = x.Biography,
-                    ProfilePictureURL = x.ProfilePictureURL
+                    ProfilePictureURL = x.ProfilePictureURL,
+                    Movies = x.MovieActors.Select( x=> new MovieIndexViewModel()
+                    {
+                        Id = x.MovieId,
+                        Name = x.Movie.Name,
+                        Category = x.Movie.MovieCategory.ToString()
+                    })
                 }).FirstOrDefaultAsync();
-            var moviesForActor = await repository.AllReadOnly<MovieActor>()
-                .Where(x => x.ActorId == id)
-                .Select(x => new MovieIndexViewModel()
-                {
-                    Id = x.MovieId,
-                    Name = GetMovieNameAndCategoryId(id).Result.Name,
-                    Category = GetMovieNameAndCategoryId(id).Result.Category
-				})
-                .ToListAsync();
-            actor.Movies = moviesForActor;
+           
             return actor;
 		}
 
-		private async Task<(string Name, string Category)> GetMovieNameAndCategoryId(int id)
-		{
-            var result = await repository.AllReadOnly<Movie>()
-                .Where(x => x.Id == id)
-                .Select(x => new { x.Name, x.MovieCategory})
-                .FirstOrDefaultAsync();
-            if (result == null)
-            {
-                throw new MovieDoesNotExistException("Movie does not exist.");
-            }
-            return (result.Name, result.MovieCategory.ToString());
-		}
+		
 	}
 }

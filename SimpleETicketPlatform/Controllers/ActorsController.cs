@@ -89,7 +89,7 @@ namespace SimpleETicketPlatform.Controllers
 				TempData["Message"] = "Actor does not exist!";
 				return RedirectToAction("NotFound", "Home");
 			}
-            var model = new ActorIndexViewModel();
+            var model = await actorsService.GetActorForDeleteAsync(id);
             return View(model);
 		}
         [HttpPost]

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleETicketPlatform.Core.Contacts;
 using SimpleETicketPlatform.Core.Models.Cinemas;
+using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
 using SimpleETicketPlatform.Infrastructure.Repository;
 
@@ -48,9 +49,16 @@ namespace SimpleETicketPlatform.Core.Services
 			await repository.SaveChangesAsync();
 		}
 
-		public async Task<List<CinemaIndexViewModel>?> GetAllCinemasAsync()
+		public async Task<FilteredCinemasViewModel?> GetAllCinemasAsync(string searchTerm)
 		{
-			return await repository.All<Cinema>().
+			var cinemas = repository.AllReadOnly<Cinema>();
+
+			if (!string.IsNullOrEmpty(searchTerm))
+			{
+				var normalizedSearchTerm = searchTerm.ToLower();
+				cinemas = cinemas.Where(x => x.Name.Contains(normalizedSearchTerm));
+			}
+			var cinemasToShow = await cinemas.
 				Select(x => new CinemaIndexViewModel()
 				{
 					Id = x.Id,
@@ -58,6 +66,21 @@ namespace SimpleETicketPlatform.Core.Services
 					Description = x.Description,
 					Logo = x.Logo
 				}).ToListAsync();
+			return new FilteredCinemasViewModel()
+			{
+				Cinemas = cinemasToShow,
+				CinemasMatched = cinemasToShow.Count()
+			};
+		}
+
+		public async Task<CinemaIndexViewModel?> GetCinemaForDeleteAsync(int id)
+		{
+			return await repository.All<Cinema>().Where(x => x.Id == id).
+				Select(x => new CinemaIndexViewModel()
+				{
+					Id = x.Id,
+					Name = x.Name,
+				}).FirstOrDefaultAsync();
 		}
 
 		public async Task<CinemaFormViewModel?> GetCinemaForEditAsync(int id)
@@ -74,18 +97,31 @@ namespace SimpleETicketPlatform.Core.Services
 
 		public async Task<CinemaDetailsViewModel?> GetDetailsForCinemaAsync(int id)
 		{
-			return await repository.All<Cinema>().
+			var cinema = await  repository.All<Cinema>().
 				Select(x => new CinemaDetailsViewModel()
 				{
 					Id = x.Id,
 					Name = x.Name,
 					Description = x.Description,
 					Logo = x.Logo,
-					MoviesCount = GetMoviesCountForCinema(id)
+					MoviesCount = GetMoviesCountForCinema(id),
 				}).FirstOrDefaultAsync();
-		}
+			cinema.Movies = await GetMoviesForCinemaAsync(id);
+			return cinema;
+        }
 
-		private int GetMoviesCountForCinema(int id)
+        private async Task<IEnumerable<MovieIndexViewModel>> GetMoviesForCinemaAsync(int id)
+        {
+			return await repository.AllReadOnly<Movie>().Where(x => x.CinemaId == id && x.EndDate <= DateTime.Now).
+				Select(x => new MovieIndexViewModel()
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Category = x.MovieCategory.ToString()
+				}).ToListAsync();
+        }
+
+        private int GetMoviesCountForCinema(int id)
 		{
 			return  repository.AllReadOnly<Movie>().Where(x => x.CinemaId == id).Count();
 		}
