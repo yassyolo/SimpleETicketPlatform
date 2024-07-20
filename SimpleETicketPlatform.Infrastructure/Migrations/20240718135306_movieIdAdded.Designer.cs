@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleETicketPlatform.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SimpleETicketPlatform.Infrastructure.Data;
 namespace SimpleETicketPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240718135306_movieIdAdded")]
+    partial class movieIdAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,78 +226,78 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
                             Id = 1,
                             CinemaId = 1,
                             Description = "\"Titanic\" is a 1997 epic romance and disaster film directed by James Cameron. It tells the poignant love story of Jack Dawson (Leonardo DiCaprio) and Rose DeWitt Bukater (Kate Winslet), two passengers from different social classes who meet and fall in love aboard the ill-fated RMS Titanic. As the ship tragically sinks on its maiden voyage, their love is tested amidst the chaos and calamity, making \"Titanic\" a timeless tale of love, loss, and human resilience.",
-                            EndDate = new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 3,
                             Name = "Titanic",
                             PhotoURL = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg",
                             Price = 12.99m,
                             ProducerId = 1,
-                            StartDate = new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 7, 18, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 2,
                             CinemaId = 1,
                             Description = "\"365 Days\" is a Polish romantic drama film released in 2020, based on the novel by Blanka Lipińska. The story follows Laura Biel, a sales director who is kidnapped by a Sicilian mafia boss named Massimo Torricelli. Massimo gives Laura 365 days to fall in love with him, promising her a life of luxury and passion. The film explores themes of desire, obsession, and power dynamics amidst a backdrop of opulent settings and intense emotions. ",
-                            EndDate = new DateTime(2024, 8, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 8, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 4,
                             Name = "365 Days",
                             PhotoURL = "https://m.media-amazon.com/images/M/MV5BYjY2NzUxNjgtNjJhNy00NTA4LTlmNzItYzQ4MDdjNWYxZjkwXkEyXkFqcGdeQXVyMTEwMTY3NDI@._V1_FMjpg_UX1000_.jpg",
                             Price = 9.99m,
                             ProducerId = 2,
-                            StartDate = new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 6, 28, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 3,
                             CinemaId = 2,
                             Description = "Starring Brad Pitt and Angelina Jolie, the story revolves around John and Jane Smith, a married couple who are unaware that they are both secretly highly skilled assassins working for competing agencies. When they are assigned to kill each other, their seemingly ordinary suburban life turns into a high-stakes game of cat and mouse. Packed with witty banter, explosive action sequences, and charismatic performances from its leads, \"Mr. & Mrs. Smith\" blends romance, humor, and thrilling espionage in a captivating and entertaining manner.",
-                            EndDate = new DateTime(2024, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 9, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 1,
                             Name = "Mr. and Mrs. Smith",
                             PhotoURL = "https://m.media-amazon.com/images/M/MV5BYjY2NzUxNjgtNjJhNy00NTA4LTlmNzItYzQ4MDdjNWYxZjkwXkEyXkFqcGdeQXVyMTEwMTY3NDI@._V1_FMjpg_UX1000_.jpg",
                             Price = 14.99m,
                             ProducerId = 3,
-                            StartDate = new DateTime(2024, 8, 9, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 8, 7, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 4,
                             CinemaId = 3,
                             Description = "\"The Wolf of Wall Street\" is a 2013 biographical black comedy directed by Martin Scorsese. Starring Leonardo DiCaprio as Jordan Belfort, the film chronicles Belfort's rise and fall as a stockbroker who engages in rampant corruption and fraud on Wall Street. Known for its high-energy storytelling, extravagant lifestyle depictions, and dark humor, the movie delves into themes of greed, excess, and moral ambiguity. With standout performances, particularly by DiCaprio and Jonah Hill, \"The Wolf of Wall Street\" is both a cautionary tale and an entertaining exploration of the excesses of the financial world.",
-                            EndDate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 10, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 3,
                             Name = "The Wolf of Wall Street",
                             PhotoURL = "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
                             Price = 19.99m,
                             ProducerId = 4,
-                            StartDate = new DateTime(2024, 8, 19, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 8, 17, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 5,
                             CinemaId = 2,
                             Description = "\"Maleficent\" is a 2014 fantasy film directed by Robert Stromberg. It stars Angelina Jolie as Maleficent, a powerful fairy who becomes vengeful after being betrayed. The film reimagines the classic \"Sleeping Beauty\" tale from Maleficent's perspective, exploring her backstory and the events that led her to curse Princess Aurora. With stunning visuals, a captivating performance by Jolie, and a fresh take on a well-known story, \"Maleficent\" delves into themes of betrayal, redemption, and the complexity of good and evil.",
-                            EndDate = new DateTime(2024, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 2,
                             Name = "Maleficent",
                             PhotoURL = "https://upload.wikimedia.org/wikipedia/en/5/55/Maleficent_poster.jpg",
                             Price = 7.99m,
                             ProducerId = 5,
-                            StartDate = new DateTime(2024, 10, 18, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 10, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 6,
                             CinemaId = 2,
                             Description = "\"Inside Out\" is a 2015 Pixar film directed by Pete Docter. It cleverly explores emotions through the story of Riley, a young girl navigating life's challenges with the help of Joy, Sadness, Anger, Fear, and Disgust—personified as characters inside her mind's control center. The film's imaginative concept and heartfelt storytelling delve into the complexities of growing up, memory, and the importance of embracing all emotions.",
-                            EndDate = new DateTime(2024, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2024, 9, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             MovieCategory = 5,
                             Name = "Inside out",
                             PhotoURL = "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_.jpg",
                             Price = 5.99m,
                             ProducerId = 6,
-                            StartDate = new DateTime(2024, 7, 30, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDate = new DateTime(2024, 7, 28, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 

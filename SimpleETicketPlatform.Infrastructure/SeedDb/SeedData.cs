@@ -243,8 +243,8 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 		{
             Actor1Movie1 = new MovieActor()
             {
-                ActorId = 1,
-                MovieId = 1
+                ActorId = Actor1.Id,
+                MovieId = Movie1.Id
             };
 			Actor2Movie1 = new MovieActor()
 			{
@@ -273,8 +273,8 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 			};
 			Actor1Movie4 = new MovieActor()
 			{
-				ActorId = 1,
-				MovieId = 4
+				ActorId = Actor1.Id,
+				MovieId = Movie4.Id
 			};
 			Actor6Movie5 = new MovieActor()
 			{

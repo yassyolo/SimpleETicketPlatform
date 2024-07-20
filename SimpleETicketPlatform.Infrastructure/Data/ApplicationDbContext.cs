@@ -31,5 +31,6 @@ namespace SimpleETicketPlatform.Infrastructure.Data
 		public DbSet<Order> Orders { get; set; } = null!;
 		public DbSet<OrderItem> OrderItems { get; set; } = null!;
 		public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; } = null!;
-	}
+        public DbSet<ShoppingCart> ShoppingCart { get; set; } = null!;
+    }
 }

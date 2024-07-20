@@ -12,9 +12,12 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
         public int Id { get; set; }
 
 		[Comment("Shopping cart item identifier")]
+		[ForeignKey(nameof(MovieId))]
 		public Movie Movie { get; set; } = null!;
+		[Comment("Movie identifiers")]
+		public int MovieId { get; set; } 
 
-		[Comment("Shopping cart items amount")]
+        [Comment("Shopping cart items amount")]
 		public int Amount { get; set; }
 
 		[Comment("Shopping cart identifier")]

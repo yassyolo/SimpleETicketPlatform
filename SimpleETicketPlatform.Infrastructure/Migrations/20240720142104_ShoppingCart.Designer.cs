@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleETicketPlatform.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SimpleETicketPlatform.Infrastructure.Data;
 namespace SimpleETicketPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240720142104_ShoppingCart")]
+    partial class ShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -499,19 +501,6 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SimpleETicketPlatform.Infrastructure.Data.Models.ShoppingCart", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("Shopping cart identifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCart");
-
-                    b.HasComment("Shopping cart entity");
-                });
-
             modelBuilder.Entity("SimpleETicketPlatform.Infrastructure.Data.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
@@ -531,14 +520,12 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
 
                     b.Property<string>("ShoppingCartId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("Shopping cart identifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
-
-                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartItem");
 
@@ -610,15 +597,7 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SimpleETicketPlatform.Infrastructure.Data.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Movie");
-
-                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("SimpleETicketPlatform.Infrastructure.Data.Models.Actor", b =>
@@ -634,11 +613,6 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
             modelBuilder.Entity("SimpleETicketPlatform.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("SimpleETicketPlatform.Infrastructure.Data.Models.ShoppingCart", b =>
-                {
-                    b.Navigation("ShoppingCartItems");
                 });
 #pragma warning restore 612, 618
         }
