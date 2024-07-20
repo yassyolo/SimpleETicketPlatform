@@ -113,14 +113,14 @@ body::before {
 .account-button {
     padding: 8px 9px;
 }
-    .cart-button{
-        margin-top:30px;
-    }
-    .management-button:hover, .account-button:hover {
-        background-color: crimson;
-        color: white;
-        border-color: crimson;
-    }
+.cart-button{
+    margin-top:30px;
+}
+.management-button:hover, .account-button:hover {
+    background-color: crimson;
+    color: white;
+    border-color: crimson;
+}
 .dropdown-menu {
     border: 1px solid darkred;
 }
@@ -141,4 +141,5 @@ body::before {
     text-transform: capitalize;
     text-decoration: none;
     margin-top:12px;
+    cursor:pointer;
 }

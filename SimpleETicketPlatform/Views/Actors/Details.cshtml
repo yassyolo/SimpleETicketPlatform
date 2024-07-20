@@ -16,20 +16,24 @@
         </div>         
  
             <div class="actor-movies">
+                @if (Model.Movies.Any())
+            {
                 <h6>@Model.FullName stars in:</h6>
                 @foreach (var movie in Model.Movies)
                 {
                     <div class="movie-row">
-                    <h5><b>Name: </b>@movie.Name (@movie.Category)</h5>
-                    <form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
-                        <button type="submit" class="btn" >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg>
-                        </button>
-                    </form>
+                        <h5><b>Name: </b>@movie.Name (@movie.Category)</h5>
+                        <form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                            <button type="submit" class="btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 }
+            }
+                
             </div>
         
         <div class="action-buttons">
@@ -61,10 +65,9 @@
 
     .card {
         display: flex;
-        align-items: center;
         border: 2px solid darkred;
         border-radius: 5px;
-        width: 60%;
+        width: 700px;
         box-sizing: border-box;
         background-color: white;
         margin: 15px 0;

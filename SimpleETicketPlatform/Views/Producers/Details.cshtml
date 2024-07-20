@@ -1,34 +1,143 @@
 ﻿@model SimpleETicketPlatform.Core.Models.Producers.ProducerDetailsViewModel
 @{
-	ViewData["Title"] = "See producer details here: ";
+    ViewData["Title"] = "See producer details here:";
 }
+
 <div class="producer-details-container">
-	<h3 class="title">@ViewBag.Title</h3>
-	<div class="image">
-		<img src="@Model.ProfilePictureURL" />
-	</div>
-	<div class="producer-description">
-		<div class="producer-info">
-			<h2><b>Name: </b> <b>@Model.FullName</b></h2>
-			<h2><b>Biography: </b> <b>@Model.Biography</b></h2>
-		</div>
-		<div class="producer-movies">
-			<h4>@Model.FullName produced:</h4>
-			@foreach (var movie in Model.Movies)
-			{
-				<h3><b>Name: </b><b>@movie.Name</b> - <b>Category: </b><b>@movie.Category</b></h3>
-				<form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
-					<btn type="submit" class="btn">See</btn>
-				</form>
-			}
-		</div>
-	</div>
-	<div class="action-buttons">
-		<form asp-action="Index" asp-controller="Producers" method="get">
-			<button type="submit" class="btn">See All</button>
-		</form>
-		<form asp-action="Edit" asp-controller="Producers" asp-route-id="@Model.Id" method="get">
-			<button type="submit" class="btn">Edit</button>
-		</form>
-	</div>
+    <h2 class="title">@ViewData["Title"]</h2>
+    <div class="card">
+        <div class="name">
+            <h3><b>Name: </b>@Model.FullName</h3>
+        </div>
+        <div class="bio-image">
+            <div class="image">
+                <img src="@Model.ProfilePictureURL" />
+            </div>
+            <p class="biography"><b>Biography: </b>@Model.Biography</p>
+        </div>
+
+        <div class="producer-movies">
+            @if (Model.Movies.Any())
+            {
+                <h6>@Model.FullName produced:</h6>
+                @foreach (var movie in Model.Movies)
+                {
+                    <div class="movie-row">
+                        <h5><b>Name: </b>@movie.Name (@movie.Category)</h5>
+                        <form asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                            <button type="submit" class="btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                }
+            }
+            else
+            {
+                <h6>@Model.FullName currently does not have movies :(</h6>
+            }
+        </div>
+
+        <div class="action-buttons">
+            <form asp-action="Index" asp-controller="Producers" method="get">
+                <button type="submit" class="btn">See All Producers</button>
+            </form>
+            <form asp-action="Edit" asp-controller="Producers" asp-route-id="@Model.Id" method="get">
+                <button type="submit" class="btn">Edit</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<style>
+    .title {
+        margin-top: 10px;
+        padding-bottom: 10px;
+        font-size: 35px;
+        text-align: center;
+        color: darkred;
+    }
+
+    .producer-details-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        display: flex;
+        align-items: center;
+        border: 2px solid darkred;
+        border-radius: 5px;
+        width: 60%;
+        box-sizing: border-box;
+        background-color: white;
+        margin: 15px 0;
+    }
+
+    .name {
+        color: white;
+        background-color: darkred;
+        width: 100%;
+        text-align: center;
+    }
+
+    .bio-image {
+        display: flex;
+        align-content: space-between;
+        gap: 20px;
+    }
+
+    .image {
+        flex-shrink: 0;
+        margin: 20px 0px 20px 20px;
+    }
+
+    .biography {
+        margin: 20px 20px 20px 20px;
+    }
+
+    .image img {
+        height: 250px;
+        width: 210px;
+        border: 1px solid darkred;
+        border-radius: 4px;
+    }
+
+    .producer-movies {
+        padding: 20px 20px 20px 20px;
+        width: 100%;
+    }
+
+    .btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: lightcoral;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 50px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    .movie-row {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+    }
+</style>

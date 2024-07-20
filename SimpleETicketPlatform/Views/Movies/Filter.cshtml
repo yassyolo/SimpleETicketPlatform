@@ -12,18 +12,20 @@
                 <div class="card-title">
                     <h4>@movie.Name</h4>
                 </div>
-                <div class="image">
-                    <img src="@movie.PhotoURL" />
+                <div class="card-content">
+                    <div class="image">
+                        <img src="@movie.PhotoURL" />
+                    </div>
+                    <div class="card-info">
+                        <h6><b class="info">Cinema: </b>@movie.CinemaName</h6>
+                        <h6><b class="info">Category: </b>@movie.MovieCategory</h6>
+                        <h6><b class="info">Start Date: </b>@movie.StartDate</h6>
+                        <h6><b class="info">End Date: </b>@movie.EndDate</h6>
+                        <h6><b class="info">Status: </b>@movie.Status</h6>
+                    </div>
                 </div>
-                <div class="card-info">
-                    <h6><b class="info">Cinema: </b>@movie.CinemaName</h6>
-                    <h6><b class="info">Category: </b>@movie.MovieCategory</h6>
-                    <h6><b class="info">Start Date: </b>@movie.StartDate</h6>
-                    <h6><b class="info">End Date: </b>@movie.EndDate</h6>
-                    <h6><b class="info">Status: </b>@movie.Status</h6>
-                </div>
-                <div class="card-buttons">
-                    <form asp-action="Details" asp-controller="Movies" method="get">
+                <div class="btns">
+                    <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@movie.Id" method="get">
                         <button type="submit" class="btn">Add to Cart (@movie.Price lv.)</button>
                     </form>
                     <form asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
@@ -40,7 +42,7 @@
     .title {
         padding: 15px;
         margin-top: 8px;
-        font-size: 28px;
+        font-size: 35px;
         text-align: center;
     }
 
@@ -51,7 +53,7 @@
         border-radius: 6px;
         display: flex;
         flex-direction: column;
-        margin-top: 20px;
+        margin-top: 5px;
         padding: 20px;
     }
 
@@ -65,12 +67,12 @@
         border: 2px solid darkred;
         border-radius: 5px;
         padding: 10px;
-        width: calc(50% - 20px); 
+        width: calc(50% - 20px);
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 400px; 
+        height: 400px;
     }
 
     .card-title {
@@ -79,41 +81,52 @@
         color: white;
         padding: 10px;
         margin-bottom: 10px;
-        text-align: center; 
+        text-align: center;
+    }
+
+    .card-content {
+        display: flex;
+        gap: 20px;
+        flex-grow: 1;
+    }
+
+    .image {
+        flex-shrink: 0;
     }
 
     .card-info {
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        font-size: 0.9rem;
+        gap: 10px;
+        font-size: 1.1rem;
     }
 
-    .card-buttons {
+    .btns {
         display: flex;
-        justify-content: space-between;
-        margin-top: auto; 
-        padding-top: 10px;
+        gap: 20px;
+        padding-left: 50px;
         border-top: 1px solid darkred;
+        margin-top: 10px;
+        padding-top: 10px;
     }
 
     .btn {
         background-color: darkred;
         color: white;
         border: none;
-        padding: 8px 16px;
+        padding: 9px 18px;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
-    .btn:hover {
-        background-color: lightcoral;
-    }
+        .btn:hover {
+            background-color: lightcoral;
+        }
 
     img {
-        height: 200px; 
-        width: 170px; 
+        height: 200px;
+        width: 170px;
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;

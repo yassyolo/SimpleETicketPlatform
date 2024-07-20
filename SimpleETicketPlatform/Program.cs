@@ -4,7 +4,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddServices();
 builder.Services.AddDbContext(builder.Configuration);
 
-
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(24);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.MaxAge = TimeSpan.FromDays(1);
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -19,8 +25,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCookiePolicy();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

@@ -1,90 +1,187 @@
 ﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieFormViewModel
 @{
-	ViewData["Title"] = "Add new movies here:";
+    ViewData["Title"] = "Add New Movies Here:";
 }
 <div class="add-movie-container">
-	<div class="left-items">
-		<form class="post-form" method="post">
-			<div class="form-member">
-				<label asp-for="Name">Name</label>
-				<input asp-for="Name" class="form-control" placeholder="Name..." />
-				<span asp-validation-for="Name" class="validation"></span>
-		    </div>
-			<div class="form-member">
-				<label asp-for="PhotoURL">Photo URL</label>
-				<input asp-for="PhotoURL" class="form-control" placeholder="URL..." />
-				<span asp-validation-for="PhotoURL" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="Price">Price</label>
-				<input asp-for="Price" class="form-control" placeholder="Price..." />
-				<span asp-validation-for="Price" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="StartDate">Start Date</label>
-				<input asp-for="StartDate" class="form-control" placeholder="Start Date..." />
-				<span asp-validation-for="StartDate" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="EndDate">End Date</label>
-				<input asp-for="EndDate" class="form-control" placeholder="End Date..." />
-				<span asp-validation-for="EndDate" class="validation"></span>
-			</div>
-	    </form>
-		
-	</div>
-	<div class="right-items">
-		<form class="post-form" method="post">
-			<div class="form-member">
-				<label asp-for="CinemaId">Cinema</label>
-				<select asp-for="CinemaId" class="form-control" placeholder="Cinema..." asp-items="ViewBag.CinemaId"></select>
-				<span asp-validation-for="CinemaId" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="MovieCategory">Category</label>
-				<select asp-for="MovieCategory" class="form-control" placeholder="Category..."></select>
-				<span asp-validation-for="MovieCategory" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="ProducerId">Producer</label>
-				<select asp-for="ProducerId" class="form-control" placeholder="Producer..." asp-items="ViewBag.ProducerId"></select>
-				<span asp-validation-for="ProducerId" class="validation"></span>
-			</div>
-			<div class="form-member">
-				<label asp-for="ActorIds">Actors</label>
-				<select asp-for="ActorIds" class="form-control" placeholder="Actors..." asp-items="ViewBag.ActorId" multiple></select>
-				<span asp-validation-for="ActorIds" class="validation"></span>
-			</div>
-		</form>
-	</div>
-	<div class="description">
-		<form class="post-form" method="post">
-			<div class="form-member">
-				<label asp-for="Description">Description</label>
-				<input asp-for="Description" class="form-control" placeholder="Description..." />
-				<span asp-validation-for="Description" class="validation"></span>
-			</div>
-		</form>
-	</div>
-	<div class="form-member text-center">
-		<img id="PhotoPreview" />
-	</div>
-	<div class="action-buttons">
-		<form asp-action="Index" asp-controller="Movies" method="get">
-			<button type="submit" class="btn">See All</button>
-		</form>
-		<form asp-action="Add" asp-controller="Movies" method="post">
-			<button type="submit" class="btn">Submit</button>
-		</form>
-	</div>
+    <h2 class="page-title">@ViewData["Title"]</h2>
+    <form class="post-form" method="post">
+        <div class="form-section">
+            <div class="form-member">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Name..." />
+                <span asp-validation-for="Name" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="PhotoURL">Photo URL</label>
+                <input asp-for="PhotoURL" class="form-control" placeholder="URL..." />
+                <span asp-validation-for="PhotoURL" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="Price">Price</label>
+                <input asp-for="Price" class="form-control" placeholder="Price..." />
+                <span asp-validation-for="Price" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="StartDate">Start Date</label>
+                <input asp-for="StartDate" class="form-control" placeholder="Start Date..." />
+                <span asp-validation-for="StartDate" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="EndDate">End Date</label>
+                <input asp-for="EndDate" class="form-control" placeholder="End Date..." />
+                <span asp-validation-for="EndDate" class="validation"></span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-member">
+                <label asp-for="CinemaId">Cinema</label>
+                <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.CinemaId"></select>
+                <span asp-validation-for="CinemaId" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="MovieCategory">Category</label>
+                <select asp-for="MovieCategory" class="form-control" asp-items="ViewBag.MovieCategory"></select>
+                <span asp-validation-for="MovieCategory" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="ProducerId">Producer</label>
+                <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
+                <span asp-validation-for="ProducerId" class="validation"></span>
+            </div>
+            <div class="form-member">
+                <label asp-for="ActorIds">Actors</label>
+                <select asp-for="ActorIds" class="form-control" asp-items="ViewBag.ActorId" multiple></select>
+                <span asp-validation-for="ActorIds" class="validation"></span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-member">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Description..." rows="4"></textarea>
+                <span asp-validation-for="Description" class="validation"></span>
+            </div>
+        </div>
+
+        <div class="form-member text-center">
+            <img id="PhotoPreview" class="photo-preview" />
+        </div>
+
+        <div class="action-buttons">
+            <form asp-action="Index" asp-controller="Movies" method="get">
+                <button type="submit" class="btn btn-secondary">See All</button>
+            </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>
+
+<style>
+    .add-movie-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 2px solid darkred;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-title {
+        color: darkred;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .post-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .form-member {
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .form-member label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-member input,
+        .form-member select,
+        .form-member textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid darkred;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-member textarea {
+            resize: vertical;
+        }
+
+    .validation {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: crimson;
+        }
+
+    .btn-secondary {
+        background-color: #888;
+        margin-right: 10px;
+    }
+
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+
+    .photo-preview {
+        max-width: 300px;
+        height: auto;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+</style>
+
 @section Scripts {
-	<script>
-
-
-		$("#PhotoURL").on("change", function () {
-			var output = document.getElementById('PhotoPreview');
-			output.src = $(this).val();
-		});
-	</script>
+    <script>
+        $("#PhotoURL").on("change", function () {
+            var output = document.getElementById('PhotoPreview');
+            output.src = $(this).val();
+        });
+    </script>
 }

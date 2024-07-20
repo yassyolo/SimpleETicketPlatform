@@ -1,111 +1,159 @@
-﻿@model List<SimpleETicketPlatform.Core.Models.Producers.ProducerIndexViewModel>
+﻿@model SimpleETicketPlatform.Core.Models.Producers.FilteredProducersViewModel
 @{
-    ViewData["Title"] = "All producers in the platform";
+    ViewData["Title"] = "Check out the producers on our platform!";
 }
 <div class="all-producers-container">
-    <h6 class="title">@ViewBag.Title</h6>
+    <h3 class="title">@ViewBag.Title</h3>
     <div class="table-info">
-        <h3><b>Profile Picture</b></h3>
-        <h3><b>Full Name</b></h3>
-        <h3 class="actions-title"><b>Actions</b></h3>
-    </div>
-    <div class="all-producers">
-        @foreach (var producer in Model)
-        {
-            <div class="producer-row">
-                <div class="image">
-                    <img src="@producer.ProfilePictureURL" />
+        <div class="search-engine">
+            <form class="form-search-engine" asp-controller="Producers" asp-action="Index" method="get">
+                <div class="search-term">
+                    <label asp-for="SearchTerm" class="bold-label">Search Producers</label>
+                    <input asp-for="SearchTerm" class="form-control" placeholder="Producer name...">
                 </div>
-                <div class="producer-info">
-                    <h4><b>@producer.FullName</b></h4>
-                    <div class="btns">
-                        <form asp-controller="Producers" asp-action="Edit" asp-route-id="@producer.Id" method="get">
-                            <button type="submit" class="btn">Edit</button>
-                        </form>
-                        <form asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id" method="get">
-                            <button type="submit" class="btn">Details</button>
-                        </form>
-                        <form asp-controller="Producers" asp-action="Delete" asp-route-id="@producer.Id" method="get">
-                            <button type="submit" class="btn">Delete</button>
-                        </form>
+                <div class="submit">
+                    <button type="submit" class="btn-search">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (Model.Producers.Any())
+    {
+        <div class="all-producers">
+            @foreach (var producer in Model.Producers)
+            {
+                <div class="producer-row">
+                    <div class="image">
+                        <img src="@producer.ProfilePictureURL" />
+                    </div>
+                    <div class="producer-info">
+                        <h4><b>@producer.FullName</b></h4>
+                        @if (!string.IsNullOrEmpty(producer.Biography) && producer.Biography.Length > 100)
+                        {
+                            <p class="biography">@producer.Biography.Substring(0, 100)... <a asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id" method="get">Read more</a></p>
+                        }
+                        else
+                        {
+                            <p class="biography">@producer.Biography</p>
+                        }
+                        <div class="btns">
+                            <form asp-controller="Producers" asp-action="Edit" asp-route-id="@producer.Id" method="get">
+                                <button type="submit" class="btn">Edit</button>
+                            </form>
+                            <form asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id" method="get">
+                                <button type="submit" class="btn">Details</button>
+                            </form>
+                            <form asp-controller="Producers" asp-action="Delete" asp-route-id="@producer.Id" method="get">
+                                <button type="submit" class="btn">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h5>@Model.ProducersMatched producers matched your search!</h5>
+    }
+
     @await Html.PartialAsync("_AddPartial", "Producers")
 </div>
 
 <style>
     .title {
-        padding: 20px;
+        margin-top: 10px;
+        padding-bottom: 10px;
+        font-size: 35px;
         text-align: center;
-    }
-
-    .btns {
-        display: flex;
-        gap: 20px;
-        padding-left: 50px;
-    }
-
-    .all-producers-container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+        color: darkred;
+        border-bottom: 2px solid darkred;
     }
 
     .table-info {
         display: flex;
-        padding: 10px 20px;
-        gap: 40px;
+        justify-content: space-between;
+        padding: 10px 30px;
+        color: darkred;
+        border-top: 1px solid darkred;
+        border-bottom: 1px solid darkred;
         background-color: #f5f5f5;
-        border-radius: 5px;
-        border: 1px solid darkred;
-        margin-bottom: 20px;
     }
 
-    .actions-title {
-        flex: 1;
-        text-align: center;
+    .search-engine {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-search-engine {
+        display: flex;
+    }
+
+    .search-term {
+        margin-right: 10px;
+        max-width: 200px;
+    }
+
+    .submit {
+        flex-shrink: 0;
+    }
+
+    .all-producers-container {
+        max-width: 1100px;
+        background-color: white;
+        border: 2px solid darkred;
+        border-radius: 7px;
+        margin: 20px auto;
+        padding: 20px;
     }
 
     .producer-row {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #ddd;
-        padding: 10px 20px;
+        padding: 20px 30px;
+        border-bottom: 1px solid darkred;
         transition: background-color 0.3s;
     }
 
         .producer-row:hover {
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
         }
 
-    .image {
-        width: 160px;
+    .image img {
+        height: 170px;
+        width: 145px;
+        border: 1px solid darkred;
+        border-radius: 3px;
+        padding: 5px;
         margin-right: 20px;
     }
 
-        .image img {
-            height: 160px;
-            width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            object-fit: cover;
-        }
-
     .producer-info {
-        flex: 1;
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
     }
 
         .producer-info h4 {
             margin: 0;
+            font-size: 1.5rem;
             color: darkred;
-            font-size: 1.2rem;
         }
+
+    .biography {
+        margin: 10px 0;
+        font-size: 1rem;
+        max-width: 600px;
+    }
+
+        .biography a {
+            color: darkred;
+            text-decoration: none;
+        }
+
+            .biography a:hover {
+                text-decoration: underline;
+            }
 
     .btns {
         display: flex;
@@ -114,17 +162,28 @@
     }
 
     .btn {
-        background-color: white;
-        border: 1px solid darkred;
-        color: darkred;
-        padding: 8px 16px;
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 5px 10px;
         border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.3s;
     }
 
         .btn:hover {
-            background-color: darkred;
-            color: white;
+            background-color: crimson;
         }
+
+    .btn-search {
+        margin-top: 25px;
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 6px 11px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
 </style>

@@ -1,55 +1,117 @@
 ﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieDetailsViewModel
 @{
-	ViewData["Title"] = "See movie details here: ";
+    ViewData["Title"] = "See movie details here: ";
 }
 <div class="movie-details-container">
-	<h3 class="title">@ViewBag.Title</h3>
-	<div class="image">
-		<img src="@Model.PhotoURL" />
-	</div>
-	<div class="movie-description">
-		<div class="movie-info">
-			<h2><b>Name: </b> <b>@Model.Name</b></h2>
-			<h2><b>Description: </b> <b>@Model.Description</b></h2>
-			<h2><b>Cinema: </b> <b>@Model.CinemaName </b> - <b>Status: </b> <b>@Model.Status </b></h2>
-			<h2><b>Dates: </b> <b>@Model.StartDate </b> -  <b>@Model.EndDate </b></h2>
-		</div>
-		<div class="movie-producer">
-			<img src="@Model.Producer.ProfilePictureURL" class="image" />
-			<h2><b>Name: </b> <b>@Model.Producer.FullName</b></h2>
-			<form asp-action="Details" asp-controller="Producers" asp-route-id="@Model.Producer.Id" method="get">
-				<button type="submit" class="btn">See All</button>
-			</form>
-		</div>
-		<div class="movie-actors">
-			<h4>Actors starring in the movie:</h4>
-			@foreach (var actor in Model.Actors)
-			{
-				<h2><b>Name: </b> <b>@actor.FullName</b></h2>
-			}
-			@foreach (var actor in Model.Actors)
-			{
-				<form asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" method="get">
-					<img src="@actor.ProfilePictureURL" class="image" />
-				</form>
-			}
-		</div>
-	</div>
-	<div class="card-buttons">
-		<form asp-action="Details" asp-controller="Movies" method="get">
-			<button type="submit" class="btn">Add to Cart (@Model.Price lv.)</button>
-		</form>
-		<form asp-action="Details" asp-controller="Movies" method="get">
-			<button type="submit" class="btn">See Details</button>
-		</form>
-	</div>
+    <h2 class="title">@ViewBag.Title</h2>
+    <div class="card">
+        <h2 class="card-title"><b>Name:</b> @Model.Name</h2>
+    <div class="movie-info-container">
+        <div class="movie-description">
+        <div class="movie-image">
+            <img src="@Model.PhotoURL" />
+        </div>        
+            <div class="movie-info">
+
+                <p><b>Description:</b> @Model.Description</p>
+                <p><b>Cinema:</b> @Model.CinemaName <b>- Status:</b> @Model.Status</p>
+                <p><b>Dates:</b> @Model.StartDate - @Model.EndDate</p>
+            </div>
+        </div>
+            <div class="movie-producer">
+                <h4>Producer:</h4>
+                <img src="@Model.Producer.ProfilePictureURL" class="producer-image" />
+                <p><b>Name:</b> @Model.Producer.FullName</p>
+                <form asp-action="Details" asp-controller="Producers" asp-route-id="@Model.Producer.Id" method="get">
+                    <button type="submit" class="btn">See</button>
+                </form>
+            </div>
+            <div class="movie-actors">
+                <h4>Actors starring in the movie:</h4>
+                @foreach (var actor in Model.Actors)
+                {
+                    <div class="actor-info">
+                        <p><b>Name:</b> @actor.FullName</p>
+                        <form asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" method="get">
+                            <img src="@actor.ProfilePictureURL" class="actor-image" />
+                        </form>
+                    </div>
+                }
+            </div>
+       
+    </div>
+    <div class="card-buttons">
+        <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" method="get">
+            <button type="submit" class="btn">Add to Cart (@Model.Price lv.)</button>
+        </form>
+        <form asp-action="Details" asp-controller="Movies" method="get">
+            <button type="submit" class="btn">See Details</button>
+        </form>
+    </div>
+    </div>
 </div>
+
 <style>
-	img {
-		height: 160px;
-		width: 135px;
-		border: 1px solid #ddd;
-		border-radius: 4px;
-		padding: 5px;
-	}
+    .movie-details-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        
+      
+        border-radius: 8px;
+    }
+    .card{
+        border: 1px solid darkred;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        display:flex;
+        width:80%;
+        justify-content:center;
+        align-content:center;
+    }
+    .title{
+        margin-bottom:20px;
+        text-align:center;
+        color:darkred;
+    }
+    .card-title{
+        background-color: darkred;
+        text-align:center;
+        color: white;
+    }
+    .image {
+        flex-shrink: 0;
+        margin: 20px 0px 20px 20px;
+    }
+
+    .movie-image img {
+        height: 250px;
+        width: 210px;
+        border: 1px solid darkred;
+        border-radius: 4px;
+    }
+
+    .actor-image{
+        height: 200px;
+        width: 180px;
+        border: 1px solid darkred;
+        border-radius: 150px;
+    }
+    .movie-description{
+        display:flex;
+        gap:20px;
+    }
+    .movie-image{
+        width:20%;
+        margin: 20px 0px 20px 20px;
+    }
+    .movie-info{
+        width:80%;
+        margin: 20px 2px 20px 20px;
+        margin-right: 20px;
+    }
+    .actor-info{
+        flex-direction: column;
+        gap: 10px;
+    }
 </style>

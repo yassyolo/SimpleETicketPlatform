@@ -1,0 +1,105 @@
+﻿@model SimpleETicketPlatform.Core.Models.Cart.CartIndexViewModel
+@{
+    ViewData["Title"] = "See cart details here: ";
+}
+<h3 class="title">@ViewBag.Title</h3>
+<div class="cart-details-container">
+    
+    <div class="cart-information">
+        <h5><b>Amount</b></h5>
+        <h5><b>Movie</b></h5>
+        <h5><b>Price per Movie</b></h5>
+        <h5><b>Total</b></h5>
+    </div>
+    <div class="items">
+        @foreach (var item in Model.Items)
+        {
+            <div class="cart-item-row">
+            <h4><b>@item.Amount</b></h4>
+            <h4><b>@item.Name</b></h4>
+            <h4><b>@item.Price</b></h4>
+            <h4><b>@item.SubTotal</b></h4>
+            <a asp-action="DeleteFromCart" asp-controller="Shoppingcart" asp-route-id="@item.Id">
+                X
+            </a>
+            </div>
+        }
+    </div>
+    <div class="cart-actions">
+        <h5 class="total-price">Total price: @Model.TotalPrice</h5>
+        <a asp-action="DeleteFromCart" asp-controller="Shoppingcart" asp-route-id="@Model.Id" class="checkout-btn">
+            ProceedToCheckout
+        </a>
+    </div>
+</div>
+<style>
+    .title {
+        margin-top: 10px;
+        padding-bottom: 10px;
+        font-size: 35px;
+        text-align: center;
+        color: darkred;
+    }
+
+    .cart-details-container {
+        display: flex;
+        width: 950px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid darkred;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        margin: 20px auto;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-information{
+        display: flex;
+        width: 100%;
+        color:white;
+        gap: 140px;
+        padding: 8px 10px 8px 10px;
+        background-color:darkred;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item-row{
+        display: flex;
+        gap:120px;
+        padding: 30px 8px 8px 8px;
+        border-bottom: 1px solid grey;
+        width:100%;
+        margin-left:10px;
+        max-height: 100px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .cart-actions{
+        display: flex;
+        gap:100px;
+        margin-top:20px;
+        margin-bottom: 20px;
+        float:left;
+        width: 50%;
+    }
+    .checkout-btn{
+        padding:8px 15px;
+        color: white;
+        background-color: darkred;
+        border: 1px solid darkred;
+        border-radius: 4px;
+        cursor:pointer;
+        text-decoration:none;
+        transition: background-color 0.3s;
+    }
+
+    .checkout-btn:hover {
+        background-color: crimson;
+        border: 1px solid crimson;
+            text-decoration: none;
+            color: white;
+    }
+    .items{
+        flex-direction: column;
+    }
+</style>
