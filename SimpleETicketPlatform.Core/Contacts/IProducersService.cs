@@ -8,7 +8,7 @@ namespace SimpleETicketPlatform.Core.Contacts
 		Task AddProducerAsync(ProducerFormViewModel model);
 		Task DeleteProducerAsync(int id);
 		Task EditProducerAsync(int id, ProducerFormViewModel model);
-		Task<List<ProducerIndexViewModel>?> GetAllProducersAsync();
+		Task<FilteredProducersViewModel> GetAllProducersAsync(string serachTerm);
 		Task<ProducerDetailsViewModel?> GetProducerDetailsAsync(int id);
 		Task<ProducerFormViewModel?> GetProducerForEditAsync(int id);
 		Task<bool> ProducerExistsByIdAsync(int id);

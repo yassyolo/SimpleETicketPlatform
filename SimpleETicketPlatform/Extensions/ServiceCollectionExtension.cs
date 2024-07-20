@@ -10,12 +10,15 @@ namespace SimpleETicketPlatform.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSession();
             services.AddScoped<IActorsService, ActorsService>();
             services.AddScoped<IProducersService, ProducersService>();
             services.AddScoped<ICinemasService, CinemasService>();
             services.AddScoped<IMoviesService, MoviesService>();
 			services.AddScoped<IShoppingCartService, ShoppingCartService>();
-			return services;
+
+            return services;
         }
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration config)
         {

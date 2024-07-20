@@ -12,16 +12,18 @@ namespace SimpleETicketPlatform.Controllers
         {
             this.producersService = producersService;
         }
-
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] FilteredProducersViewModel query)
         {
-            var model = await producersService.GetAllProducersAsync();
-            return View(model);
+            var model = await producersService.GetAllProducersAsync(query.SearchTerm);
+            query.Producers = model.Producers;
+            query.ProducersMatched = model.ProducersMatched;
+            return View(query);
         }
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            if (await producersService.ProducerExistsByIdAsync(id))
+            if (await producersService.ProducerExistsByIdAsync(id) == false)
             {
                 TempData["Message"] = "Producer does not exist!";
                 return RedirectToAction("NotFound", "Home");
@@ -48,7 +50,7 @@ namespace SimpleETicketPlatform.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (await producersService.ProducerExistsByIdAsync(id))
+            if (await producersService.ProducerExistsByIdAsync(id) == false)
             {
                 TempData["Message"] = "Producer does not exist!";
                 return RedirectToAction("NotFound", "Home");
@@ -59,7 +61,7 @@ namespace SimpleETicketPlatform.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ProducerFormViewModel model)
         {
-            if (await producersService.ProducerExistsByIdAsync(id))
+            if (await producersService.ProducerExistsByIdAsync(id) == false)
             {
                 TempData["Message"] = "Producer does not exist!";
                 return RedirectToAction("NotFound", "Home");
@@ -74,7 +76,7 @@ namespace SimpleETicketPlatform.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-			if (await producersService.ProducerExistsByIdAsync(id))
+			if (await producersService.ProducerExistsByIdAsync(id) == false)
 			{
 				TempData["Message"] = "Producer does not exist!";
 				return RedirectToAction("NotFound", "Home");
@@ -85,7 +87,7 @@ namespace SimpleETicketPlatform.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			if (await producersService.ProducerExistsByIdAsync(id))
+			if (await producersService.ProducerExistsByIdAsync(id) == false)
 			{
 				TempData["Message"] = "Producer does not exist!";
 				return RedirectToAction("NotFound", "Home");

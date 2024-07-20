@@ -86,6 +86,7 @@ namespace SimpleETicketPlatform.Core.Services
 		public async Task<CinemaFormViewModel?> GetCinemaForEditAsync(int id)
 		{
 			return await repository.All<Cinema>().
+				Where(x => x.Id == id).
 				Select(x => new CinemaFormViewModel()
 				{
 					Id = x.Id,
@@ -98,6 +99,7 @@ namespace SimpleETicketPlatform.Core.Services
 		public async Task<CinemaDetailsViewModel?> GetDetailsForCinemaAsync(int id)
 		{
 			var cinema = await  repository.All<Cinema>().
+				Where(x => x.Id == id).
 				Select(x => new CinemaDetailsViewModel()
 				{
 					Id = x.Id,
@@ -112,7 +114,7 @@ namespace SimpleETicketPlatform.Core.Services
 
         private async Task<IEnumerable<MovieIndexViewModel>> GetMoviesForCinemaAsync(int id)
         {
-			return await repository.AllReadOnly<Movie>().Where(x => x.CinemaId == id && x.EndDate <= DateTime.Now).
+			return await repository.AllReadOnly<Movie>().Where(x => x.CinemaId == id && x.EndDate >= DateTime.Now).
 				Select(x => new MovieIndexViewModel()
 				{
 					Id = x.Id,

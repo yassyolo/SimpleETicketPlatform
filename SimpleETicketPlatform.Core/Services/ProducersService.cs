@@ -4,6 +4,8 @@ using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Core.Models.Producers;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
 using SimpleETicketPlatform.Infrastructure.Repository;
+using static SimpleETicketPlatform.Infrastructure.Data.Constants.ModelConstants;
+
 
 namespace SimpleETicketPlatform.Core.Services
 {
@@ -16,9 +18,16 @@ namespace SimpleETicketPlatform.Core.Services
 			this.repository = repository;
 		}
 
-		public async Task<List<ProducerIndexViewModel>?> GetAllProducersAsync()
+		public async Task<FilteredProducersViewModel> GetAllProducersAsync(string searchTerm)
 		{
-			return await repository.AllReadOnly<Producer>().
+			var producers = repository.AllReadOnly<Infrastructure.Data.Models.Producer>();
+
+			if (!string.IsNullOrWhiteSpace(searchTerm))
+			{
+				var normalizedSearchTerm = searchTerm.ToLower();
+				producers = producers.Where(x => x.FullName.Contains(normalizedSearchTerm));
+			}
+			var producersToShow =  await producers.
 				Select(x => new ProducerIndexViewModel()
 				{
 					Id = x.Id,
@@ -26,41 +35,47 @@ namespace SimpleETicketPlatform.Core.Services
 					Biography = x.Biography,
 					ProfilePictureURL = x.ProfilePictureURL
 				}).ToListAsync();
+			return new FilteredProducersViewModel()
+			{
+				ProducersMatched = producersToShow.Count(),
+				Producers = producersToShow
+			};
 		}
 
 		public async Task<ProducerDetailsViewModel?> GetProducerDetailsAsync(int id)
 		{
-			var producer = await repository.AllReadOnly<Producer>().
+			var producer = await repository.AllReadOnly<Infrastructure.Data.Models.Producer>().
 				Select(x => new ProducerDetailsViewModel()
 				{
 					Id = x.Id,
 					FullName = x.FullName,
 					Biography = x.Biography,
-					ProfilePictureURL = x.ProfilePictureURL,
-					Movies = GetMoviesForProducer(id)
+                    ProfilePictureURL = x.ProfilePictureURL
 				}).FirstOrDefaultAsync();
-			return producer;
+			producer.Movies = await GetMoviesForProducer(id);
+
+            return producer;
 		}
 
-		private IEnumerable<MovieIndexViewModel> GetMoviesForProducer(int id)
+		private async Task< IEnumerable<MovieIndexViewModel>> GetMoviesForProducer(int id)
 		{
-			return repository.AllReadOnly<Movie>().Where(x => x.ProducerId == id).
+			return await repository.AllReadOnly<Infrastructure.Data.Models.Movie>().Where(x => x.ProducerId == id).
 				Select(x => new MovieIndexViewModel()
 				{
 					Id = x.Id,
 					Name = x.Name,
 					Category = x.MovieCategory.ToString()
-				}).ToList();
+				}).ToListAsync();
 		}
 
 		public async Task<bool> ProducerExistsByIdAsync(int id)
 		{
-			return await repository.AllReadOnly<Producer>().AnyAsync(x => x.Id == id);
+			return await repository.AllReadOnly<Infrastructure.Data.Models.Producer>().AnyAsync(x => x.Id == id);
 		}
 
 		public async Task AddProducerAsync(ProducerFormViewModel model)
 		{
-			var producer = new Producer()
+			var producer = new Infrastructure.Data.Models.Producer()
 			{
 				FullName = model.FullName,
 				Biography = model.Biography,
@@ -72,7 +87,7 @@ namespace SimpleETicketPlatform.Core.Services
 
 		public async Task<ProducerFormViewModel?> GetProducerForEditAsync(int id)
 		{
-			return await repository.AllReadOnly<Producer>().Where(x => x.Id == id)
+			return await repository.AllReadOnly<Infrastructure.Data.Models.Producer>().Where(x => x.Id == id)
 				.Select(x => new ProducerFormViewModel()
 				{
 					Id = x.Id,
@@ -84,7 +99,7 @@ namespace SimpleETicketPlatform.Core.Services
 
 		public async Task EditProducerAsync(int id, ProducerFormViewModel model)
 		{
-			var producer = await repository.GetByIdAsync<Producer>(id);
+			var producer = await repository.GetByIdAsync<Infrastructure.Data.Models.Producer>(id);
 			producer.ProfilePictureURL = model.ProfilePictureURL;
 			producer.FullName = model.FullName;
 			producer.Biography = model.Biography;
@@ -94,9 +109,9 @@ namespace SimpleETicketPlatform.Core.Services
 
 		public async Task DeleteProducerAsync(int id)
 		{
-			var producer = await repository.GetByIdAsync<Producer>(id);
+			var producer = await repository.GetByIdAsync<Infrastructure.Data.Models.Producer>(id);
 
-			await repository.DeleteAsync<Producer>(producer);
+			await repository.DeleteAsync<Infrastructure.Data.Models.Producer>(producer);
 		}
 	}
 }
