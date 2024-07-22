@@ -43,13 +43,18 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
         public DateTime EndDate { get; set; }
 
         [Comment("Movie category")]
+        [ForeignKey(nameof(MovieCategoryId))]
+        public MovieCategory MovieCategory { get; set; } = null!;
+
+        [Comment("Movie category identifier")]
         [Required]
-        public MovieCategory MovieCategory { get; set; }
+        public int MovieCategoryId { get; set; }
 
         [Comment("Movie actors")]
         public IEnumerable<MovieActor> MovieActors = new List<MovieActor>();
 
         [Comment("Movie cinema identifier")]
+        [Required]
         public int CinemaId { get; set; }
 
         [ForeignKey(nameof(CinemaId))]
@@ -57,6 +62,7 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
         public Cinema Cinema { get; set; } = null!;
 
         [Comment("Movie producer identifier")]
+        [Required]
         public int ProducerId { get; set; }
 
         [ForeignKey(nameof(ProducerId))]

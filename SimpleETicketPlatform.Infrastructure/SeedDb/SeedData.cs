@@ -1,4 +1,5 @@
-﻿using SimpleETicketPlatform.Infrastructure.Data.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using SimpleETicketPlatform.Infrastructure.Data.Models;
 
 namespace SimpleETicketPlatform.Infrastructure.SeedDb
 {
@@ -33,16 +34,91 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 		public MovieActor Actor6Movie3 { get; set; }
 		public MovieActor Actor1Movie4 { get; set; }
 		public MovieActor Actor6Movie5 { get; set; }
-		public SeedData()
+		public MovieCategory Category1 { get; set; }
+        public MovieCategory Category2 { get; set; }
+        public MovieCategory Category3 { get; set; }
+        public MovieCategory Category4 { get; set; }
+        public MovieCategory Category5 { get; set; }
+        public MovieCategory Category6 { get; set; }
+        public MovieCategory Category7 { get; set; }
+        public ApplicationUser AdminUser { get; set; }
+        public ApplicationUser User { get; set; }
+        public SeedData()
         {
 			SeedProducers();
 			SeedCinemas();
+            SeedMovieCategories();
             SeedMovies();            
             SeedActors();
             SeedMovieActors();
+            SeedUsers();
         }
 
-		private void SeedProducers()
+        private void SeedUsers()
+        {
+            var hasher = new PasswordHasher<ApplicationUser>();
+            AdminUser = new ApplicationUser
+            {
+                FullName = "Admin",
+                UserName = "admin",
+                Email = "admin@gmail.com",
+                EmailConfirmed = true
+            };
+
+            AdminUser.PasswordHash = hasher.HashPassword(AdminUser, "admin123");
+
+            User = new ApplicationUser
+            {
+                FullName = "User",
+                UserName = "user",
+                Email = "user@gmail.com",
+                EmailConfirmed = true
+            };
+
+            User.PasswordHash = hasher.HashPassword(User, "user123");
+        }
+
+        private void SeedMovieCategories()
+        {
+			Category1 = new MovieCategory
+			{
+				Id = 1,
+				Name = "Action"
+			};
+            Category2 = new MovieCategory
+            {
+                Id = 2,
+                Name = "Fantasy"
+            };
+            Category3 = new MovieCategory
+            {
+                Id = 3,
+                Name = "Drama"
+            };
+            Category4 = new MovieCategory
+            {
+                Id = 4,
+                Name = "Romance"
+            };
+            Category5 = new MovieCategory
+            {
+                Id = 5,
+                Name = "Cartoon"
+            };
+            Category6 = new MovieCategory
+            {
+                Id = 6,
+                Name = "Comedy"
+            };
+            Category7 = new MovieCategory
+            {
+                Id = 7,
+                Name = "Thriller"
+            };
+
+        }
+
+        private void SeedProducers()
         {
             Producer1 = new Producer
             {
@@ -122,7 +198,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
                 Description = "\"Titanic\" is a 1997 epic romance and disaster film directed by James Cameron. It tells the poignant love story of Jack Dawson (Leonardo DiCaprio) and Rose DeWitt Bukater (Kate Winslet), two passengers from different social classes who meet and fall in love aboard the ill-fated RMS Titanic. As the ship tragically sinks on its maiden voyage, their love is tested amidst the chaos and calamity, making \"Titanic\" a timeless tale of love, loss, and human resilience.",
                 CinemaId = Cinema1.Id,
                 ProducerId = Producer1.Id,
-                MovieCategory = MovieCategory.Drama,
+                MovieCategoryId = Category3.Id,
                 Price = 12.99m,
                 PhotoURL = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg",
                 StartDate = DateTime.Today,
@@ -135,7 +211,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
                 Description = "\"365 Days\" is a Polish romantic drama film released in 2020, based on the novel by Blanka Lipińska. The story follows Laura Biel, a sales director who is kidnapped by a Sicilian mafia boss named Massimo Torricelli. Massimo gives Laura 365 days to fall in love with him, promising her a life of luxury and passion. The film explores themes of desire, obsession, and power dynamics amidst a backdrop of opulent settings and intense emotions. ",
                 CinemaId = Cinema1.Id,
                 ProducerId = Producer2.Id,
-                MovieCategory = MovieCategory.Romance,
+                MovieCategoryId = Category4.Id,
                 Price = 9.99m,
                 PhotoURL = "https://m.media-amazon.com/images/M/MV5BYjY2NzUxNjgtNjJhNy00NTA4LTlmNzItYzQ4MDdjNWYxZjkwXkEyXkFqcGdeQXVyMTEwMTY3NDI@._V1_FMjpg_UX1000_.jpg",
                 StartDate = DateTime.Today.AddDays(-20),
@@ -148,7 +224,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
                 Description = "Starring Brad Pitt and Angelina Jolie, the story revolves around John and Jane Smith, a married couple who are unaware that they are both secretly highly skilled assassins working for competing agencies. When they are assigned to kill each other, their seemingly ordinary suburban life turns into a high-stakes game of cat and mouse. Packed with witty banter, explosive action sequences, and charismatic performances from its leads, \"Mr. & Mrs. Smith\" blends romance, humor, and thrilling espionage in a captivating and entertaining manner.",
                 ProducerId = Producer3.Id,
                 CinemaId = Cinema2.Id,
-                MovieCategory = MovieCategory.Action,
+                MovieCategoryId = Category1.Id,
                 Price = 14.99m,
                 PhotoURL = "https://m.media-amazon.com/images/M/MV5BYjY2NzUxNjgtNjJhNy00NTA4LTlmNzItYzQ4MDdjNWYxZjkwXkEyXkFqcGdeQXVyMTEwMTY3NDI@._V1_FMjpg_UX1000_.jpg",
                 StartDate = DateTime.Today.AddDays(20),
@@ -161,7 +237,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 				Description = "\"The Wolf of Wall Street\" is a 2013 biographical black comedy directed by Martin Scorsese. Starring Leonardo DiCaprio as Jordan Belfort, the film chronicles Belfort's rise and fall as a stockbroker who engages in rampant corruption and fraud on Wall Street. Known for its high-energy storytelling, extravagant lifestyle depictions, and dark humor, the movie delves into themes of greed, excess, and moral ambiguity. With standout performances, particularly by DiCaprio and Jonah Hill, \"The Wolf of Wall Street\" is both a cautionary tale and an entertaining exploration of the excesses of the financial world.",
 				ProducerId = Producer4.Id,
                 CinemaId = Cinema3.Id,
-				MovieCategory = MovieCategory.Drama,
+				MovieCategoryId = Category3.Id,
 				Price = 19.99m,
 				PhotoURL = "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
 				StartDate = DateTime.Today.AddDays(30),
@@ -174,7 +250,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 				Description = "\"Maleficent\" is a 2014 fantasy film directed by Robert Stromberg. It stars Angelina Jolie as Maleficent, a powerful fairy who becomes vengeful after being betrayed. The film reimagines the classic \"Sleeping Beauty\" tale from Maleficent's perspective, exploring her backstory and the events that led her to curse Princess Aurora. With stunning visuals, a captivating performance by Jolie, and a fresh take on a well-known story, \"Maleficent\" delves into themes of betrayal, redemption, and the complexity of good and evil.",
 				ProducerId = Producer5.Id,
 				CinemaId = Cinema2.Id,
-				MovieCategory = MovieCategory.Fantasy,
+				MovieCategoryId = Category2.Id,
 				Price = 7.99m,
 				PhotoURL = "https://upload.wikimedia.org/wikipedia/en/5/55/Maleficent_poster.jpg",
 				StartDate = DateTime.Today.AddDays(90),
@@ -187,7 +263,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 				Description = "\"Inside Out\" is a 2015 Pixar film directed by Pete Docter. It cleverly explores emotions through the story of Riley, a young girl navigating life's challenges with the help of Joy, Sadness, Anger, Fear, and Disgust—personified as characters inside her mind's control center. The film's imaginative concept and heartfelt storytelling delve into the complexities of growing up, memory, and the importance of embracing all emotions.",
 				ProducerId = Producer6.Id,
 				CinemaId = Cinema2.Id,
-				MovieCategory = MovieCategory.Cartoon,
+				MovieCategoryId = Category5.Id,
 				Price = 5.99m,
 				PhotoURL = "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_.jpg",
 				StartDate = DateTime.Today.AddDays(10),
