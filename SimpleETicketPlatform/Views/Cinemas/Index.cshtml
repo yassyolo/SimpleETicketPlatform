@@ -3,7 +3,7 @@
     ViewData["Title"] = "Check out the cinemas in our platform!";
 }
 <div class="all-cinemas-container">
-    <h3 class="title">@ViewBag.Title</h3>
+    <h3 class="title">@ViewData["Title"]</h3>
     <div class="table-info">
         <div class="search-engine">
             <form class="form-search-engine" asp-controller="Cinemas" asp-action="Index" method="get">
@@ -38,13 +38,13 @@
                         }
                         <div class="btns">
                             <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn">Edit</button>
+                                <button type="submit" class="btn-movie-index">Edit</button>
                             </form>
                             <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn">Details</button>
+                                <button type="submit" class="btn-movie-index">Details</button>
                             </form>
                             <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn">Delete</button>
+                                <button type="submit" class="btn-movie-index">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -115,9 +115,9 @@
         transition: background-color 0.3s;
     }
 
-        .cinema-row:hover {
-            background-color: #f5f5f5;
-        }
+    .cinema-row:hover {
+        background-color: #f5f5f5;
+    }
 
     .image img {
         height: 170px;
@@ -161,7 +161,7 @@
         margin-top: 10px;
     }
 
-    .btn {
+    .btn-movie-index {
         background-color: darkred;
         color: white;
         border: none;
@@ -171,7 +171,7 @@
         transition: background-color 0.3s;
     }
 
-        .btn:hover {
+        .btn-movie-index:hover {
             background-color: crimson;
         }
 

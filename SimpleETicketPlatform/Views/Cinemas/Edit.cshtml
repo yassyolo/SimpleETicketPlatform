@@ -24,10 +24,8 @@
             <input asp-for="Description" class="form-control" placeholder="Description..." rows="4" />
             <span asp-validation-for="Description" class="validation"></span>
         </div>
-        <div class="action-buttons">
-            
-                <a asp-action="Index" asp-controller="Cinemas" method="get" class="btn">See All</a>
-            
+        <div class="action-buttons">            
+                <a asp-action="Index" asp-controller="Cinemas" method="get" class="btn">See All</a>            
                 <button type="submit" class="btn">Submit</button>
         </div>
     </form>
@@ -83,18 +81,18 @@
         margin-bottom: 20px;
     }
 
-        .form-member label {
-            font-weight: bold;
-        }
+    .form-member label {
+        font-weight: bold;
+    }
 
-        .form-member input {
-            align-content: center;
-            justify-content: center;
-            width: 95%;
-            height: 30px;
-            border: 1px solid darkred;
-            border-radius: 3px;
-        }
+    .form-member input {
+        align-content: center;
+        justify-content: center;
+        width: 95%;
+        height: 30px;
+        border: 1px solid darkred;
+        border-radius: 3px;
+    }
 
     .form-select {
         width: 85%;

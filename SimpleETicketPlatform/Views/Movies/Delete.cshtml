@@ -1,14 +1,14 @@
-﻿@model SimpleETicketPlatform.Core.Models.Producers.ProducerIndexViewModel
+﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieIndexViewModel
 
 <div class="delete-container">
-    <h4>Are you sure you want to delete producer with:</h4>
-    <h3><b>Name:</b> @Model.FullName</h3>
+    <h4>Are you sure you want to delete movie with:</h4>
+    <h3><b>Name:</b> @Model.Name</h3>
     <h3><b>Id:</b> @Model.Id</h3>
     <div class="action-buttons">
-        <form asp-action="Index" asp-controller="Producers" method="get">
+        <form asp-action="Index" asp-controller="Movies" method="get">
             <button type="submit" class="btn-return">Return</button>
         </form>
-        <form asp-action="DeleteConfirmed" asp-controller="Producers" asp-route-id="@Model.Id" method="post">
+        <form asp-action="DeleteConfirmed" asp-controller="Movies" asp-route-id="@Model.Id" method="post">
             <button type="submit" class="btn">Submit</button>
         </form>
     </div>
@@ -57,7 +57,7 @@
     }
 
     .btn:hover {
-        background-color: crimson;
+        background-color: lightcoral;
     }
 
     .action-buttons {

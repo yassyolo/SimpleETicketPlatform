@@ -3,7 +3,7 @@
     ViewData["Title"] = "Check out the actors in our platform!";
 }
 <div class="all-actors-container">
-    <h3 class="title">@ViewBag.Title</h3>
+    <h3 class="title">@ViewData["Title"]</h3>
     <div class="table-info">
         <div class="search-engine">
             <form class="form-search-engine" asp-controller="Actors" asp-action="Index" method="get">
@@ -38,13 +38,13 @@
                         }
                         <div class="btns">
                             <form asp-controller="Actors" asp-action="Edit" asp-route-id="@actor.Id" method="get">
-                                <button type="submit" class="btn">Edit</button>
+                                <button type="submit" class="btn-actors-index">Edit</button>
                             </form>
                             <form asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id" method="get">
-                                <button type="submit" class="btn">Details</button>
+                                <button type="submit" class="btn-actors-index">Details</button>
                             </form>
                             <form asp-controller="Actors" asp-action="Delete" asp-route-id="@actor.Id" method="get">
-                                <button type="submit" class="btn">Delete</button>
+                                <button type="submit" class="btn-actors-index">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
         margin-top: 10px;
     }
 
-    .btn {
+    .btn-actors-index {
         background-color: darkred;
         color: white;
         border: none;
@@ -171,9 +171,9 @@
         transition: background-color 0.3s;
     }
 
-        .btn:hover {
-            background-color: crimson;
-        }
+    .btn-actors-index:hover {
+         background-color: crimson;
+    }
 
     .btn-search {
         margin-top: 25px;

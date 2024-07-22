@@ -3,38 +3,43 @@
     ViewData["Title"] = "See movie details here: ";
 }
 <div class="movie-details-container">
-    <h2 class="title">@ViewBag.Title</h2>
+    <h2 class="title">@ViewData["Title"]</h2>
     <div class="card">
         <h2 class="card-title"><b>Name:</b> @Model.Name</h2>
     <div class="movie-info-container">
         <div class="movie-description">
-        <div class="movie-image">
-            <img src="@Model.PhotoURL" />
-        </div>        
+            <div class="movie-image">
+                <img src="@Model.PhotoURL" />
+            </div>        
             <div class="movie-info">
-
                 <p><b>Description:</b> @Model.Description</p>
                 <p><b>Cinema:</b> @Model.CinemaName <b>- Status:</b> @Model.Status</p>
                 <p><b>Dates:</b> @Model.StartDate - @Model.EndDate</p>
             </div>
         </div>
             <div class="movie-producer">
-                <h4>Producer:</h4>
+                <h5>Producer:</h5>
                 <img src="@Model.Producer.ProfilePictureURL" class="producer-image" />
-                <p><b>Name:</b> @Model.Producer.FullName</p>
-                <form asp-action="Details" asp-controller="Producers" asp-route-id="@Model.Producer.Id" method="get">
-                    <button type="submit" class="btn">See</button>
-                </form>
+                <h5><b>@Model.Producer.FullName</b> </h5>
+                <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.Producer.Id">
+                    <button type="submit" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                        </svg>
+                    </button>
+                </a>
             </div>
+            
+                <h5>Actors starring in the movie:</h5>
             <div class="movie-actors">
-                <h4>Actors starring in the movie:</h4>
                 @foreach (var actor in Model.Actors)
                 {
                     <div class="actor-info">
-                        <p><b>Name:</b> @actor.FullName</p>
-                        <form asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" method="get">
-                            <img src="@actor.ProfilePictureURL" class="actor-image" />
-                        </form>
+                        
+                        <a asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" method="get">
+                            <p class="name"> @actor.FullName</p>
+                        </a>
+                        <img src="@actor.ProfilePictureURL" class="actor-image" />
                     </div>
                 }
             </div>
@@ -44,8 +49,8 @@
         <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" method="get">
             <button type="submit" class="btn">Add to Cart (@Model.Price lv.)</button>
         </form>
-        <form asp-action="Details" asp-controller="Movies" method="get">
-            <button type="submit" class="btn">See Details</button>
+        <form asp-action="Edit" asp-controller="Movies" asp-route-id="@Model.Id" method="get">
+            <button type="submit" class="btn">Edit</button>
         </form>
     </div>
     </div>
@@ -54,10 +59,8 @@
 <style>
     .movie-details-container {
         max-width: 1200px;
-        margin: 20px auto;
         padding: 20px;
-        
-      
+         
         border-radius: 8px;
     }
     .card{
@@ -66,8 +69,9 @@
         background-color: #f9f9f9;
         display:flex;
         width:80%;
-        justify-content:center;
-        align-content:center;
+        flex-direction:column;
+        margin: 0 auto;
+        padding: 15px;
     }
     .title{
         margin-bottom:20px;
@@ -78,6 +82,7 @@
         background-color: darkred;
         text-align:center;
         color: white;
+        border-radius: 3px;
     }
     .image {
         flex-shrink: 0;
@@ -92,26 +97,76 @@
     }
 
     .actor-image{
-        height: 200px;
-        width: 180px;
+        height: 150px;
+        width: 140px;
         border: 1px solid darkred;
-        border-radius: 150px;
+        border-radius: 60%;
     }
     .movie-description{
+
         display:flex;
         gap:20px;
+        flex-wrap:wrap;
     }
     .movie-image{
-        width:20%;
         margin: 20px 0px 20px 20px;
+        flex: 1 0 210px;
     }
     .movie-info{
-        width:80%;
+        flex: 2 1 400px;
         margin: 20px 2px 20px 20px;
         margin-right: 20px;
     }
     .actor-info{
         flex-direction: column;
         gap: 10px;
+    }
+
+    .btn {
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 9px 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: crimson;
+    }
+
+    .card-buttons {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+        margin-left:557px;
+    }
+    .movie-producer{
+        display: flex;
+        gap:20px;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+
+    .movie-producer .btn svg {
+        margin-bottom: 5px;
+    }
+
+    .movie-producer .btn  {
+        padding: 5px 8px;
+    }
+
+    .movie-actors {
+        display: flex;
+        gap: 30px;
+        flex-direction: row;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .name{
+        color:darkred;
+        text-decoration:underline;
+        cursor: pointer;
     }
 </style>

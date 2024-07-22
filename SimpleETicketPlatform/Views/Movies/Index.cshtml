@@ -1,6 +1,6 @@
 ﻿@model List<SimpleETicketPlatform.Core.Models.Movies.AllMoviesViewModel>
 @{
-    ViewData["Title"] = "Filtered Movies";
+    ViewData["Title"] = "All movies in our platform:";
 }
 
 <div class="all-movies-container">
@@ -28,9 +28,15 @@
                     <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@movie.Id" method="get">
                         <button type="submit" class="btn">Add to Cart (@movie.Price lv.)</button>
                     </form>
-                    <form asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                    <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
                         <button type="submit" class="btn">See Details</button>
-                    </form>
+                    </a>
+                    <a asp-action="Edit" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                        <button type="submit" class="btn">Edit</button>
+                    </a>
+                    <a asp-action="Delete" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                        <button type="submit" class="btn">Delete</button>
+                    </a>
                 </div>
             </div>
         }
@@ -47,7 +53,7 @@
 
     .all-movies-container {
         width: 1050px;
-        background-color: white;
+         background-color: #f5f5f5;
         border: 1px solid darkred;
         border-radius: 6px;
         display: flex;
@@ -72,6 +78,10 @@
         flex-direction: column;
         justify-content: space-between;
         height: 400px;
+    }
+
+    .card:hover {
+        background-color: #f5f5f5;
     }
 
     .card-title {
@@ -119,9 +129,9 @@
         transition: background-color 0.3s ease;
     }
 
-        .btn:hover {
-            background-color: lightcoral;
-        }
+    .btn:hover {
+        background-color: crimson;
+    }
 
     img {
         height: 200px;

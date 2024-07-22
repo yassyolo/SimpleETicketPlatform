@@ -3,7 +3,7 @@
     ViewData["Title"] = "Check out the producers on our platform!";
 }
 <div class="all-producers-container">
-    <h3 class="title">@ViewBag.Title</h3>
+    <h3 class="title">@ViewData["Title"]</h3>
     <div class="table-info">
         <div class="search-engine">
             <form class="form-search-engine" asp-controller="Producers" asp-action="Index" method="get">
@@ -38,13 +38,13 @@
                         }
                         <div class="btns">
                             <form asp-controller="Producers" asp-action="Edit" asp-route-id="@producer.Id" method="get">
-                                <button type="submit" class="btn">Edit</button>
+                                <button type="submit" class="btn-producers-index">Edit</button>
                             </form>
                             <form asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id" method="get">
-                                <button type="submit" class="btn">Details</button>
+                                <button type="submit" class="btn-producers-index">Details</button>
                             </form>
                             <form asp-controller="Producers" asp-action="Delete" asp-route-id="@producer.Id" method="get">
-                                <button type="submit" class="btn">Delete</button>
+                                <button type="submit" class="btn-producers-index">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -115,9 +115,10 @@
         transition: background-color 0.3s;
     }
 
-        .producer-row:hover {
-            background-color: #f5f5f5;
-        }
+    .producer-row:hover {
+    
+        background-color: #f5f5f5;
+    }
 
     .image img {
         height: 170px;
@@ -134,11 +135,11 @@
         flex-grow: 1;
     }
 
-        .producer-info h4 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: darkred;
-        }
+    .producer-info h4 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: darkred;
+    }
 
     .biography {
         margin: 10px 0;
@@ -146,14 +147,14 @@
         max-width: 600px;
     }
 
-        .biography a {
-            color: darkred;
-            text-decoration: none;
-        }
+    .biography a {
+        color: darkred;
+        text-decoration: none;
+    }
 
-            .biography a:hover {
-                text-decoration: underline;
-            }
+    .biography a:hover {            
+        text-decoration: underline;
+    }
 
     .btns {
         display: flex;
@@ -161,7 +162,7 @@
         margin-top: 10px;
     }
 
-    .btn {
+    .btn-producers-index {
         background-color: darkred;
         color: white;
         border: none;
@@ -171,9 +172,9 @@
         transition: background-color 0.3s;
     }
 
-        .btn:hover {
-            background-color: crimson;
-        }
+    .btn-producers-index:hover {
+        background-color: crimson;
+    }
 
     .btn-search {
         margin-top: 25px;

@@ -1,10 +1,10 @@
 ﻿@model SimpleETicketPlatform.Core.Models.Movies.MovieFormViewModel
 @{
-    ViewData["Title"] = "Add New Movies Here:";
+    ViewData["Title"] = "Edit Movie Here:";
 }
 <div class="add-movie-container">
     <h2 class="page-title">@ViewData["Title"]</h2>
-    <form class="post-form" method="post">
+    <form class="post-form" asp-action="Edit" asp-controller="Movies" method="post">
         <div class="form-section">
             <div class="form-member">
                 <label asp-for="Name">Name</label>
@@ -69,9 +69,9 @@
         </div>
 
         <div class="action-buttons">
-            <form asp-action="Index" asp-controller="Movies" method="get">
+            <a asp-action="Index" asp-controller="Movies" method="get">
                 <button type="submit" class="btn-add">See All</button>
-            </form>
+            </a>
             <button type="submit" class="btn-add">Submit</button>
         </div>
     </form>
@@ -146,7 +146,7 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin-right:20px;
+        margin-right: 20px;
     }
 
     .btn-add:hover {
