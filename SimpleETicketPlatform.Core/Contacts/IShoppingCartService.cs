@@ -11,5 +11,6 @@ namespace SimpleETicketPlatform.Core.Contacts
         Task DeleteFromCartAsync(int id, string cartId);
         Task<CartIndexViewModel> GetCartDetailsAsync(string id);
         Task<ShoppingCart> GetShoppingCart();
+        Task<bool> ShoppingCartItemExists(int itemId, string cartId);
     }
 }

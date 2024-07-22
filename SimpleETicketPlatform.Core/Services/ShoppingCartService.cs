@@ -107,5 +107,10 @@ namespace SimpleETicketPlatform.Core.Services
 
             return cart;
         }
+
+        public async Task<bool> ShoppingCartItemExists(int itemId, string cartId)
+        {
+            return await repository.AllReadOnly<ShoppingCartItem>().Where(x => x.Id == itemId && x.ShoppingCartId == cartId).AnyAsync();
+        }
     }
 }

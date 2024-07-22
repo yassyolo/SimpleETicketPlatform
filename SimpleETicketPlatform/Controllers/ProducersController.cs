@@ -81,7 +81,7 @@ namespace SimpleETicketPlatform.Controllers
 				TempData["Message"] = "Producer does not exist!";
 				return RedirectToAction("NotFound", "Home");
 			}
-            var model = new ProducerIndexViewModel();
+            var model = await producersService.GetProducerForDeleteAsync(id); 
             return View(model);
 		}
 		[HttpPost]

@@ -64,7 +64,7 @@ namespace SimpleETicketPlatform.Core.Services
 				{
 					Id = x.Id,
 					Name = x.Name,
-					Category = x.MovieCategory.ToString()
+					Category = x.MovieCategory.Name.ToString()
 				}).ToListAsync();
 		}
 
@@ -113,5 +113,15 @@ namespace SimpleETicketPlatform.Core.Services
 
 			await repository.DeleteAsync<Infrastructure.Data.Models.Producer>(producer);
 		}
-	}
+
+        public async Task<ProducerIndexViewModel?> GetProducerForDeleteAsync(int id)
+        {
+			return await repository.AllReadOnly<Infrastructure.Data.Models.Producer>().Where(x => x.Id == id)
+				.Select(x => new ProducerIndexViewModel()
+				{
+					Id = x.Id,
+					FullName = x.FullName
+				}).FirstOrDefaultAsync();
+        }
+    }
 }

@@ -11,5 +11,9 @@ namespace SimpleETicketPlatform.Core.Contacts
 		Task<NewMovieDropdownsViewModel> GetNewMovieDropdowns();
 		Task<FilteredMoviesViewModel> FilterMoviesAsync(string searchTerm);
 		Task AddNewMovieAsync(MovieFormViewModel model);
-	}
+        Task<MovieFormViewModel>? GetMovieForEditAsync(int id);
+        Task EditMovieAsync(int id, MovieFormViewModel model);
+        Task<MovieIndexViewModel?> GetMovieForDeleteAsync(int id);
+        Task DeleteMovieAsync(int id);
+    }
 }

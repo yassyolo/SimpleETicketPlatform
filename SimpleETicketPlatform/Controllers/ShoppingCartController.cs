@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using SimpleETicketPlatform.Core.Contacts;
-using SimpleETicketPlatform.Infrastructure.Data;
-using SimpleETicketPlatform.Infrastructure.Data.Models;
 
 namespace SimpleETicketPlatform.Controllers
 {
-	public class ShoppingCartController : Controller
+    public class ShoppingCartController : Controller
 	{
 		private readonly IShoppingCartService shoppingCartService;
         private readonly IMoviesService moviesService;
@@ -35,14 +32,16 @@ namespace SimpleETicketPlatform.Controllers
 			return RedirectToAction(nameof(CartDetails));
 		}
         [HttpGet]
-        public async Task<IActionResult> DeleteFromCart(int id, string cartId)
+        public async Task<IActionResult> DeleteFromCart(int id)
         {
-           /* if (await shoppingCartService.ShoppingCartItemExists(id, cartId) == false)
-            {
-                TempData["Message"] = "Item does not exist.";
-                return RedirectToAction("NotFound", "Home");
-            }*/
-            await shoppingCartService.DeleteFromCartAsync(id, cartId);
+            var cart = await shoppingCartService.GetShoppingCart();
+            if (await shoppingCartService.ShoppingCartItemExists(id, cart.Id) == false)
+             {
+                 TempData["Message"] = "Item does not exist.";
+                 return RedirectToAction("NotFound", "Home");
+             }
+            
+            await shoppingCartService.DeleteFromCartAsync(id, cart.Id);
             return RedirectToAction(nameof(CartDetails));
         }
         [HttpGet]
@@ -57,8 +56,8 @@ namespace SimpleETicketPlatform.Controllers
 		{
 			var cart = await shoppingCartService.GetShoppingCart();
 			var model = await shoppingCartService.GetCartDetailsAsync(cart.Id);
-			return View(model);
-		}
+            return PartialView("_CartSummaryPartial", model);
+        }
 
 	}
 }
