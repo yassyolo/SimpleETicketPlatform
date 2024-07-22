@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SimpleETicketPlatform.Core.Contacts;
 using SimpleETicketPlatform.Core.Services;
 using SimpleETicketPlatform.Infrastructure.Data;
+using SimpleETicketPlatform.Infrastructure.Data.Models;
 using SimpleETicketPlatform.Infrastructure.Repository;
 
 namespace SimpleETicketPlatform.Extensions
@@ -27,6 +29,18 @@ namespace SimpleETicketPlatform.Extensions
                 (options => options.UseSqlServer(connectionStr));
 
             services.AddScoped<IRepository, Repository>();
+            return services;
+        }
+        public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>();
             return services;
         }
     }
