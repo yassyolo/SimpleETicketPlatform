@@ -1,0 +1,76 @@
+﻿@model SimpleETicketPlatform.Core.Models.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Log in here:";
+}
+@if (TempData["Error"] != null)
+{
+    <div class="error-message">
+        <p>TempData["Error"]</p>
+    </div>
+}
+<div class="login-container">
+    <h2 class="title-login">@ViewData["Title"]</h2>
+    <form class="post-form" method="post" asp-action="Login" asp-controller="Account">       
+        <div class="form-member">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Email..">
+            <span asp-validation-for="Email" class="validation"></span>
+        </div>
+        <div class="form-member">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" class="form-control" placeholder="Password..">
+            <span asp-validation-for="Password" class="validation"></span>
+        </div>
+        <div class="action-buttons">
+            <button type="submit" class="btn-login"><b>Submit</b></button>
+            <a asp-action="CreateAccount" asp-controller="Account" method="get" class="dont-have-account">Dont have an account?</a>
+            
+        </div>
+    </form>
+</div>
+<style>
+    .login-container{
+        margin-top: 20px;
+        width: 400px;
+        border: 1px solid darkred;
+        border-radius: 3px;
+        padding:20px;
+    }
+    .title-login{
+        padding: 10px;
+        color:darkred;
+        text-align:center;
+    }
+    .post-form{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap:20px;
+        background-color: #f5f5f5;
+        border-radius: 3px;
+        box-shadow: 5px 5px 5px grey;
+    }
+    .action-buttons{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .btn-login{
+        background-color: darkred;
+        width: 80px;
+        border-color: darkred;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .btn-login:hover {
+        background-color: crimson;
+            border-color: crimson;
+    }
+
+    .dont-have-account{
+
+    }
+</style>

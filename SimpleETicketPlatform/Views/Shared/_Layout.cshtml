@@ -36,35 +36,29 @@
                 </div>
             </div>
 
-                <div class="right-items">
-                    <div class="search-engine">
-                        @await Html.PartialAsync("_FilterMoviesPartial", new FilteredMoviesViewModel())
-                    </div>
-                    <div class="dropdown">
+            <div class="right-items">
+                <div class="search-engine">
+                    @await Html.PartialAsync("_FilterMoviesPartial", new FilteredMoviesViewModel())
+                </div>
+                <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle account-button" type="button" id="dropdownMenuButtonAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <b>Account</b>
                     </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" asp-action="Index" asp-controller="Cinemas"><b>Admin</b></a>
                         <a class="dropdown-item" asp-action="Index" asp-controller="Actors"><b>Normal</b></a>
-                        </div>
-                    </div>
-                <div class="cart-dropdown">
-                    <button class="cart-button" type="button" id="dropdownMenuButtonAccount"   >
-                        <b>
-                            Cart
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                            </svg>
-                        </b>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                       <a asp-controller="ShoppingCart" asp-action="CartSummary" method="get"></a>
                     </div>
                 </div>
-                    
+                <div id="cart-summary-container" >
                 </div>
-          
+
+                <button id="cart-button" class="btn btn-secondary">
+                    Cart
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    </svg>
+                </button>
+            </div>
         </div>
         <div class="container">
             <main role="main" class="pb-3">
@@ -81,6 +75,30 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('cart-button').addEventListener('click', function () {
+           
+                const container = document.getElementById('cart-summary-container');
+                container.style.display = 'block';
+                
+                fetch('/ShoppingCart/CartSummary')
+                    .then(response => response.text())
+                    .then(html => {
+                        container.innerHTML = html;
+                    })                   ;
+            });
+
+            document.addEventListener('click', function (event) {
+                const container = document.getElementById('cart-summary-container');
+                const button = document.getElementById('cart-button');
+                if (container.style.display === 'block' && !container.contains(event.target) && !button.contains(event.target)) {
+                    container.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

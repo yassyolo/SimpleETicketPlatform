@@ -37,15 +37,25 @@
                             <p class="description">@cinema.Description</p>
                         }
                         <div class="btns">
-                            <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn-movie-index">Edit</button>
-                            </form>
-                            <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn-movie-index">Details</button>
-                            </form>
-                            <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
-                                <button type="submit" class="btn-movie-index">Delete</button>
-                            </form>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Cinemas" asp-action="Edit" asp-route-id="@cinema.Id" method="get">
+                                    <button type="submit" class="btn-movie-index">Edit</button>
+                                </form>
+                                <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
+                                    <button type="submit" class="btn-movie-index">Details</button>
+                                </form>
+                                <form asp-controller="Cinemas" asp-action="Delete" asp-route-id="@cinema.Id" method="get">
+                                    <button type="submit" class="btn-movie-index">Delete</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id" method="get">
+                                    <button type="submit" class="btn-movie-index">Details</button>
+                                </form>
+                            }
+                            
                         </div>
                     </div>
                 </div>

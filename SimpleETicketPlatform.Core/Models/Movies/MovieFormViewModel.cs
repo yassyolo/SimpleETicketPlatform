@@ -34,7 +34,7 @@ namespace SimpleETicketPlatform.Core.Models.Movies
 		public DateTime EndDate { get; set; }
 
 		[Required(ErrorMessage = RequiredErrorMessage)]
-		public MovieCategory MovieCategory { get; set; } 
+		public int MovieCategoryId { get; set; } 
 
 		[Required(ErrorMessage = RequiredErrorMessage)]
 		public int CinemaId { get; set; }

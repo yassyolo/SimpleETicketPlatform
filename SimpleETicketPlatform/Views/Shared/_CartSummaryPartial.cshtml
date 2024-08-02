@@ -1,0 +1,38 @@
+﻿
+   
+@model SimpleETicketPlatform.Core.Models.Cart.CartIndexViewModel
+
+<div class="cart-summary">
+    <div class="title">
+        <h5>Summary</h5>
+    </div>
+    <div class="items">
+        @foreach (var item in Model.Items)
+        {
+            <div class="item-row">
+                <h5>@item.Amount X @item.Name</h5>
+                <h5>@item.Price</h5>
+            </div>
+        }
+    </div>
+    <div class="summary-actions">
+        <a asp-action="CartDetails" asp-controller="ShoppingCart">See Details</a>
+        <a asp-route-id="@Model.Id" asp-action="Checkout" asp-controller="Orders">Checkout(@Model.TotalPrice lv.)</a>
+    </div>
+</div>
+<style>
+    .cart-summary {
+        position: fixed;
+        top: 90px;
+        bottom: 200px;
+        left: 920px;
+        right: 200px;
+        z-index: 9999;
+        padding:15px;
+    }
+    .title{
+        color:darkred;
+        margin-left: 80px;
+        border-bottom: 1px solid darkred;
+    }
+</style>

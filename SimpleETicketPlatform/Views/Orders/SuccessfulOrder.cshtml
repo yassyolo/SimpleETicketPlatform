@@ -1,0 +1,22 @@
+﻿@model SimpleETicketPlatform.Core.Models.Orders.SuccessfullOrderViewModel
+@{
+	ViewData["Title"] = "Successful order!";
+}
+<div class="successful-order-container">
+	<h4 class="title"></h4>
+		<div class="info">
+			<p>Order with id: @Model.Id has been placed successfully!</p>
+		</div>
+		<div class="order-btns">
+			<a class="back-btn" asp-action="Index" asp-controller="Movies">Back to Movies</a>
+			<a class="back-btn" asp-action="OrdersHistory" asp-controller="Orders" asp-route-id="@Model.UserId">Orders history</a>
+		</div>	
+</div>
+<style>
+	.successful-order-container{
+		width: 500px;
+		background-color: lightgreen;
+		border-radius: 3px;
+		box-shadow: 10px 10px 10px green;
+	}
+</style>

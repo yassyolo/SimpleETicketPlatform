@@ -7,5 +7,6 @@ namespace SimpleETicketPlatform.Core.Models.Movies
 		public IEnumerable<Actor> Actors { get; set; } = new List<Actor>();
 		public IEnumerable<Producer> Producers { get; set; } = new List<Producer>();
 		public IEnumerable<Cinema> Cinemas { get; set; } = new List<Cinema>();
+		public IEnumerable<MovieCategory> Categories { get; set; } = new List<MovieCategory>();
 	}
 }
