@@ -50,6 +50,11 @@ namespace SimpleETicketPlatform.Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task<bool> CartWithIdExists(string id)
+        {
+            return await repository.AllReadOnly<ShoppingCart>().Where(x => x.Id == id).AnyAsync();
+        }
+
         public async Task DeleteFromCartAsync(int id, string cartId)
         {
             var cartItem = await repository.AllReadOnly<ShoppingCartItem>()
@@ -88,6 +93,35 @@ namespace SimpleETicketPlatform.Core.Services
             }
             cart.TotalPrice = cart.Items.Select(x => x.SubTotal).Sum();
             return cart;           
+        }
+
+        public async Task<CartSummaryViewModel?> GetCartSummaryAsync(string id)
+        {
+            var cart = await repository.AllReadOnly<ShoppingCart>().Where(x => x.Id == id)
+               .Select(x => new CartSummaryViewModel()
+               {
+                   Id = x.Id,
+               })
+               .FirstOrDefaultAsync();
+            var cartItems = repository.AllReadOnly<ShoppingCartItem>().Where(x => x.ShoppingCartId == id);
+            foreach (var item in cartItems)
+            {
+                var movie = await repository.GetByIdAsync<Movie>(item.MovieId);
+                var shoppingItem = new CartItemViewModel()
+                {
+                    Id = item.Id,
+                    Name = movie.Name,
+                    Price = movie.Price,
+                    Amount = item.Amount,
+                    SubTotal = item.Amount * movie.Price,
+                    PhotoURL =movie.PhotoURL
+                };
+                cart.Items.Add(shoppingItem);
+            }
+            cart.Price = cart.Items.Select(x => x.SubTotal).Sum();
+            cart.Tax = cart.Price * (20 / 100);
+            cart.TotalPrice = cart.Price + cart.Tax;
+            return cart;
         }
 
         public async Task<ShoppingCart> GetShoppingCart()
