@@ -22,7 +22,9 @@ namespace SimpleETicketPlatform.Infrastructure.Data
 			builder.ApplyConfiguration(new ActorConfiguration());
 			builder.ApplyConfiguration(new MovieActorConfiguration());
             builder.ApplyConfiguration(new OrderItemConfiguration());
+            //builder.ApplyConfiguration(new RolesConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserRolesConfiguration());
 
             base.OnModelCreating(builder);
         }

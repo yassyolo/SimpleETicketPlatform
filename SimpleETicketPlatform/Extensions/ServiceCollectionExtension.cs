@@ -19,6 +19,8 @@ namespace SimpleETicketPlatform.Extensions
             services.AddScoped<ICinemasService, CinemasService>();
             services.AddScoped<IMoviesService, MoviesService>();
 			services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IOrdersService, OrdersService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             return services;
         }
@@ -40,7 +42,8 @@ namespace SimpleETicketPlatform.Extensions
                 options.Password.RequireLowercase = false;
                 options.SignIn.RequireConfirmedAccount = false;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
             return services;
         }
     }

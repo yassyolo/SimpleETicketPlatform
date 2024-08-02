@@ -204,6 +204,15 @@ namespace SimpleETicketPlatform.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.InsertData(
+            table: "AspNetRoles",
+            columns: new[] { "Id", "Name", "NormalizedName", "ConcurrencyStamp" },
+            values: new object[,]
+            {
+                { "71b461ba-dc43-4d74-b70f-29499795bea8", "Admin", "ADMIN", Guid.NewGuid().ToString() },
+                { "6a173502-8668-415e-9ccc-c15da662d7ec", "User", "USER", Guid.NewGuid().ToString() }
+            });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -43,6 +43,10 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
         public MovieCategory Category7 { get; set; }
         public ApplicationUser AdminUser { get; set; }
         public ApplicationUser User { get; set; }
+        public IdentityRole AdminRole { get; set; }
+        public IdentityRole UserRole { get; set; }
+        public IdentityUserRole<string> AdminUserRole { get; set; }
+        public IdentityUserRole<string> UserUserRole { get; set; }
         public SeedData()
         {
 			SeedProducers();
@@ -50,8 +54,9 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
             SeedMovieCategories();
             SeedMovies();            
             SeedActors();
-            SeedMovieActors();
+            SeedMovieActors();            
             SeedUsers();
+            SeedRoles();
         }
 
         private void SeedUsers()
@@ -59,6 +64,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
             var hasher = new PasswordHasher<ApplicationUser>();
             AdminUser = new ApplicationUser
             {
+                Id = "35d3d6fa-c020-485b-aec0-8845468c4c01",
                 FullName = "Admin",
                 UserName = "admin",
                 Email = "admin@gmail.com",
@@ -69,6 +75,7 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
 
             User = new ApplicationUser
             {
+                Id = "f71a12d7-8b47-492c-8585-c5295875e01c",
                 FullName = "User",
                 UserName = "user",
                 Email = "user@gmail.com",
@@ -78,6 +85,20 @@ namespace SimpleETicketPlatform.Infrastructure.SeedDb
             User.PasswordHash = hasher.HashPassword(User, "user123");
         }
 
+        private void SeedRoles()
+        {
+            AdminUserRole = new IdentityUserRole<string>()
+            {
+                UserId = AdminUser.Id,
+                RoleId = "71b461ba-dc43-4d74-b70f-29499795bea8" 
+
+            };
+            UserUserRole = new IdentityUserRole<string>()
+            {
+                UserId = User.Id,
+                RoleId = "6a173502-8668-415e-9ccc-c15da662d7ec"
+            };
+        }
         private void SeedMovieCategories()
         {
 			Category1 = new MovieCategory

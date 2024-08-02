@@ -42,17 +42,23 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
-    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    string[] roleNames = { "Admin", "User" };
+    await SeedRolesAsync(serviceProvider);
+}
 
+app.Run();
+
+static async Task SeedRolesAsync(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string[] roleNames = { "Admin", "User" };
     foreach (var roleName in roleNames)
     {
         var roleExists = await roleManager.RoleExistsAsync(roleName);
-        if (roleExists == false)
+        var roleId = await roleManager.FindByNameAsync(roleName);
+        if (!roleExists)
         {
             await roleManager.CreateAsync(new IdentityRole(roleName));
         }
     }
 }
-
-app.Run();

@@ -2,6 +2,11 @@
 {
     public static class ModelConstants
     {
+        public static class Account
+        {
+            public const int PasswordMaxLength = 10;
+            public const int PasswordMinLength = 0;
+        }
         public static class Actor
         {
             public const int FullNameMaxLength = 100;

@@ -8,15 +8,15 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 	{
 		[Key]
 		[Comment("Actor identifier")]
-		public int Id { get; set; }
+		public int Id { get; set; } 
 
 		[Comment("Order email")]
 		public string Email { get; set; } = string.Empty;
 
 		[Comment("Order user identifier")]
-		public int UserId { get; set; }
+		public string UserId { get; set; } = string.Empty;
 
-		[Comment("Order items")]
+        [Comment("Order items")]
 		public IEnumerable<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 	}
 }
