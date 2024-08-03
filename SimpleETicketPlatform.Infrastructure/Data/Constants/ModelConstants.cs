@@ -6,6 +6,8 @@
         {
             public const int PasswordMaxLength = 10;
             public const int PasswordMinLength = 0;
+            public const int FullNameMaxLength = 50;
+            public const int FullNameMinLength = 0;
         }
         public static class Actor
         {

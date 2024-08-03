@@ -11,28 +11,29 @@
                 <div class="image">
                     <img src="@item.PhotoURL" />
                 </div>
+                <div class="card-info">
                 <div class="name-price">
-                    <h4>@item.Name</h4>
+                    <h4 class="name">@item.Name</h4>
                     <h5>@item.Price Lv. X @item.Amount</h5>
+                </div>
+                <div class="cart-item-subtotal">
+                    <h4>@item.SubTotal</h4>
+                </div>
                 </div>
             </div>
         }
     </div>
     <div class="cart-actions">
         <div class="prices">
-            <h4 class="total-price"><b>Total price: @Model.TotalPrice</b></h4>
+            <h4 class="total-price"><b>Total price: @Model.Price</b></h4>
             <h4 class="total-price"><b>Tax: @Model.Tax</b></h4>
-            
+            <h4 class="total-price"><b>Total price: @Model.TotalPrice</b></h4>
         </div>
         <div class="btns-order">
-            @* 
-            @*<a asp-action="PlaceOrder" asp-controller="Orders" asp-route-id="@Model.Id" class="checkout-btn">
-            <b>Checkout</b>
-            </a>*@
             <div id="paypal-btn"></div> 
             
             <a asp-action="CartDetails" asp-controller="ShoppingCart" asp-route-id="@Model.Id" class="checkout-btn">
-                Back
+                <b>Back</b>
             </a>
         </div>
     </div>
@@ -67,7 +68,10 @@
                 
             },
             onAuthorize: function (data, actions) {
-                
+                return actions.payment.execute().then(function () {
+                    var url = '@Url.Action("PlaceOrder", "Orders", new {id = Model.Id})';
+                    window.location.href = url;
+                });
             }
         }, '#paypal-btn');
     </script>
@@ -90,17 +94,16 @@
         margin-bottom: 20px;
     }
     .cart-summary-container{
-        width: 700px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 700px;       
+        box-shadow: 0 8px 15px grey;
         flex-direction: column;
         display: flex;
         padding: 20px;
+        border: 1px solid darkred;
+        border-radius: 4px;
     }
     .itmes{
-        display: flex;
-        
+        display: flex;        
         gap: 20px;
     }
     .cart-item-row {
@@ -110,6 +113,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        position: relative;
     }
     .name-price{
         padding: 20px;
@@ -122,7 +126,7 @@
     }
 
     .checkout-btn{
-        padding: 8px 10px;
+        padding: 7px 9px;
         background-color: darkred;
         border-color: darkred;
         border-radius: 3px;
@@ -131,7 +135,26 @@
     }
 
     .checkout-btn:hover {
-        color: crimson;
-            border-color: crimson;
+        background-color: crimson;
+        border-color: crimson;
+        color: white;
+    }
+    .card-info{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        position: relative;
+    }
+    .name{
+        color: darkred;
+    }  
+    .cart-item-subtotal{
+        position: absolute; 
+        bottom: 20px;
+        right: 20px;
+    }
+    .cart-actions{
+       margin-top:30px;
+       margin-bottom: 15px;
     }
 </style>

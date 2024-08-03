@@ -37,15 +37,19 @@
                             <p class="biography">@actor.Biography</p>
                         }
                         <div class="btns">
-                            <form asp-controller="Actors" asp-action="Edit" asp-route-id="@actor.Id" method="get">
-                                <button type="submit" class="btn-actors-index">Edit</button>
-                            </form>
                             <form asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id" method="get">
                                 <button type="submit" class="btn-actors-index">Details</button>
+                            </form>
+                            @if(User.IsInRole("Admin"))
+                            {
+                            <form asp-controller="Actors" asp-action="Edit" asp-route-id="@actor.Id" method="get">
+                                <button type="submit" class="btn-actors-index">Edit</button>
                             </form>
                             <form asp-controller="Actors" asp-action="Delete" asp-route-id="@actor.Id" method="get">
                                 <button type="submit" class="btn-actors-index">Delete</button>
                             </form>
+                            }
+
                         </div>
                     </div>
                 </div>

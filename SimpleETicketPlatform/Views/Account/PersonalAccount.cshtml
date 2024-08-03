@@ -1,0 +1,40 @@
+﻿@model SimpleETicketPlatform.Core.Models.Account.PersonalAccountViewModel
+@{
+    ViewData["Title"] = "Personal account information";
+}
+<div class="personal-info-container">
+    <h4 class="personal-account-title">@ViewData["Title"]</h4>
+    <div class="info">
+        <h5><b>Full name: @Model.FullName</b> </h5>
+        <h5><b>Email: @Model.Email</b> </h5>
+        <a asp-action="ChnagePassword" asp-controller="Account" class="change">Change password</a>
+        @if (User.IsInRole("User"))
+        {
+            <h5 class="total-order"><b>Total orders placed: @Model.TotalOrders</b> </h5>
+        }
+
+    </div>
+</div>
+<style>
+    .personal-info-container{
+        width: 600px;
+        border: 2px solid darkred;
+        border-radius: 4px;
+        box-shadow: 8px 8px 8px darkred;
+        background-color: #f5f5f5;
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .personal-account-title{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .change{
+        margin-top: 25px;
+        color: darkred;
+    }
+    .total-order{
+        margin-top: 25px;
+    }
+</style>

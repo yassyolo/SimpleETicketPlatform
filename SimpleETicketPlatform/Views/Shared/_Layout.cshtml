@@ -44,16 +44,37 @@
                     <button class="btn btn-secondary dropdown-toggle account-button" type="button" id="dropdownMenuButtonAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <b>Account</b>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-action="Index" asp-controller="Cinemas"><b>Admin</b></a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="Actors"><b>Normal</b></a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-action="Login" asp-controller="Account"><b>Admin</b></a>
+                            <a class="dropdown-item" asp-action="Login" asp-controller="Account"><b>Normal</b></a>
+                            <a class="dropdown-item" asp-action="Register" asp-controller="Account"><b>Sign up</b></a>
+                        </div>
+                    }
+                    else if (User.IsInRole("User"))
+                    {
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-action="PersonalAccount" asp-controller="Account"><b>My profile</b></a>
+                            <a class="dropdown-item" asp-action="OrdersHistory" asp-controller="Orders"><b>Orders history</b></a>
+                            <a class="dropdown-item" asp-action="Logout" asp-controller="Account"><b>Log out</b></a>
+                        </div>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-action="PersonalAccount" asp-controller="Account"><b>My profile</b></a>
+                            <a class="dropdown-item" asp-action="OrdersHistory" asp-controller="Orders"><b>Orders</b></a>
+                            <a class="dropdown-item" asp-action="Logout" asp-controller="Account"><b>Log out</b></a>
+                        </div>
+                    }
+                    
                 </div>
                 <div id="cart-summary-container" >
                 </div>
 
                 <button id="cart-button" class="btn btn-secondary">
-                    Cart
+                    <b>Cart</b>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
                     </svg>

@@ -21,22 +21,37 @@
                         <h6><b class="info">Category: </b>@movie.MovieCategory</h6>
                         <h6><b class="info">Start Date: </b>@movie.StartDate</h6>
                         <h6><b class="info">End Date: </b>@movie.EndDate</h6>
-                        <h6><b class="info">Status: </b>@movie.Status</h6>
+                        @if (movie.Status == "AVAILABLE")
+                        {
+                            <h6><div class="green-status">@movie.Status</div></h6>
+                        }
+                        else
+                        {
+                            <h6><div class="red-status">@movie.Status</div></h6>
+                        }
+                        
                     </div>
                 </div>
                 <div class="btns">
-                    <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@movie.Id" method="get">
-                        <button type="submit" class="btn">Add to Cart (@movie.Price lv.)</button>
-                    </form>
+                    @if (User.IsInRole("User"))
+                    {
+                        <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@movie.Id" method="get">
+                            <button type="submit" class="btn-movie">Add to Cart (@movie.Price lv.)</button>
+                        </form>
+                    }
+                    else if (true)
+                    {
+                        <a asp-action="Edit" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                            <button type="submit" class="btn-movie">Edit</button>
+                        </a>
+                        <a asp-action="Delete" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
+                            <button type="submit" class="btn-movie">Delete</button>
+                        </a>
+                    }                    
                     <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
-                        <button type="submit" class="btn">See Details</button>
+                        <button type="submit" class="btn-movie">See Details</button>
                     </a>
-                    <a asp-action="Edit" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
-                        <button type="submit" class="btn">Edit</button>
-                    </a>
-                    <a asp-action="Delete" asp-controller="Movies" asp-route-id="@movie.Id" method="get">
-                        <button type="submit" class="btn">Delete</button>
-                    </a>
+                    
                 </div>
             </div>
         }
@@ -58,7 +73,7 @@
         border-radius: 6px;
         display: flex;
         flex-direction: column;
-        margin-top: 5px;
+        margin-top: 7px;
         padding: 20px;
     }
 
@@ -119,7 +134,7 @@
         padding-top: 10px;
     }
 
-    .btn {
+    .btn-movie {
         background-color: darkred;
         color: white;
         border: none;
@@ -129,7 +144,7 @@
         transition: background-color 0.3s ease;
     }
 
-    .btn:hover {
+        .btn-movie:hover {
         background-color: crimson;
     }
 
@@ -139,5 +154,14 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
+    }
+    .green-status{
+        text-shadow: 1px 1px 1px green;
+        color: darkgreen;
+    }
+
+    .red-status {
+        text-shadow: 1px 1px 1px red;
+        color: darkred;
     }
 </style>
