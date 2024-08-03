@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleETicketPlatform.Core.Contacts;
 using SimpleETicketPlatform.Core.Models.Account;
+using SimpleETicketPlatform.Extensions;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
 
 namespace SimpleETicketPlatform.Controllers
@@ -53,9 +54,48 @@ namespace SimpleETicketPlatform.Controllers
             return View(model);
         }
 
-        private object PersonalAccount()
+        public async Task<IActionResult> PersonalAccount()
         {
-            throw new NotImplementedException();
+            var userId = User.GetId();
+            var model = await accountService.GetPersonalInfoAsync(userId);
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            var model = new RegisterViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+            var account = await accountService.FindAccountByEmailAsync(model.Email);
+            if (account != null)
+            {
+                TempData["Error"] = "User with this email exists.";
+                return View(model);
+            }
+            var user = new ApplicationUser()
+            {
+                FullName = model.FullName,
+                Email = model.Email,
+                UserName = model.Email
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "User");
+            }
+            return RedirectToAction(nameof(PersonalAccount));
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

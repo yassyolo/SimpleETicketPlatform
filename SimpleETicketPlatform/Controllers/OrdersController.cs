@@ -41,7 +41,7 @@ namespace SimpleETicketPlatform.Controllers
             var userId = User.GetId();
             var email = User.GetEmail();
             await ordersService.MakeOrderAsync(id, userId, email);
-            return RedirectToAction(nameof(SuccessfulOrder));
+            return RedirectToAction(nameof(SuccessfulOrder), new {id = id});
         }
         public async Task<IActionResult> SuccessfulOrder(int id)
         {

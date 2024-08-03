@@ -87,7 +87,7 @@ namespace SimpleETicketPlatform.Core.Services
                     Name = movie.Name,
                     Price = movie.Price,
                     Amount = item.Amount,
-                    SubTotal = item.Amount * movie.Price
+                    SubTotal = item.Amount * movie.Price,
                 };
                 cart.Items.Add(shoppingItem);
             }
@@ -118,8 +118,8 @@ namespace SimpleETicketPlatform.Core.Services
                 };
                 cart.Items.Add(shoppingItem);
             }
-            cart.Price = cart.Items.Select(x => x.SubTotal).Sum();
-            cart.Tax = cart.Price * (20 / 100);
+            cart.Price = cart.Items.Select(x => x.SubTotal).Sum(); 
+            cart.Tax = cart.Price * 0.2m;
             cart.TotalPrice = cart.Price + cart.Tax;
             return cart;
         }
