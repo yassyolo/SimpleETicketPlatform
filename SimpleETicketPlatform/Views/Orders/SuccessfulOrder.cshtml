@@ -3,20 +3,49 @@
 	ViewData["Title"] = "Successful order!";
 }
 <div class="successful-order-container">
-	<h4 class="title"></h4>
 		<div class="info">
-			<p>Order with id: @Model.Id has been placed successfully!</p>
+			<h4>Order with Id: @Model.Id has been placed successfully!</h4>
 		</div>
 		<div class="order-btns">
-			<a class="back-btn" asp-action="Index" asp-controller="Movies">Back to Movies</a>
-			<a class="back-btn" asp-action="OrdersHistory" asp-controller="Orders" asp-route-id="@Model.UserId">Orders history</a>
+		<a class="back-btn" asp-action="OrdersHistory" asp-controller="Orders" asp-route-id="@Model.UserId"><b>View your orders history</b></a>
+		<a class="back-btn" asp-action="Index" asp-controller="Movies"><b>Back to Movies</b></a>
+			
 		</div>	
 </div>
 <style>
 	.successful-order-container{
+		margin-top: 20px;
 		width: 500px;
 		background-color: lightgreen;
 		border-radius: 3px;
 		box-shadow: 10px 10px 10px green;
+		padding: 20px;
+		text-align: center;
+		justify-content: center;
+	}
+	h4{
+		margin-bottom: 30px;
+	}
+	.order-btns{
+		display: flex;
+		gap: 25px;
+		flex-direction: column;
+		align-items: center;
+	}
+	.back-btn{
+		background-color: forestgreen;
+		border-color: forestgreen;
+		border-radius: 4px;
+		padding: 8px 12px;
+		text-decoration: none;
+		color: white;
+		cursor: pointer;
+	}
+
+	.back-btn:hover {
+		background-color: palegreen;
+        border-color: lightgreen;
+		text-decoration: none;
+		color: white;
 	}
 </style>

@@ -1,11 +1,4 @@
-﻿using SimpleETicketPlatform.Core.Models.Actors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleETicketPlatform.Core.Models.Cinemas
+﻿namespace SimpleETicketPlatform.Core.Models.Cinemas
 {
     public class FilteredCinemasViewModel
     {

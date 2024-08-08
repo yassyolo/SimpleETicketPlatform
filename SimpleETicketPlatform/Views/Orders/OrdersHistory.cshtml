@@ -1,0 +1,68 @@
+﻿@model SimpleETicketPlatform.Core.Models.Orders.OrdersHistoryViewModel
+@{
+    ViewData["Title"] = "See your orders history here:";
+}
+
+<div class="producer-details-container">
+    <h2 class="title">@ViewData["Title"]</h2>
+    <div class="info">
+        <h4>Hey, @Model.Username! You have made @Model.OrdersCount orders on our site.</h4>
+        <div class="orders">
+        @if (Model.Orders.Any())
+        {
+            @foreach (var order in Model.Orders)
+            {
+                <div class="order-row">
+                   <h5>Placed on: @order.Date</h5>
+                   <h5>Items purchased: @order.OrderItems.Count()</h5>
+                   <a class="order-details" asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@order.Id">See Details</a>
+                </div>
+            }
+        }
+        </div>
+    </div>
+    <a class="back-btn" asp-action="Index" asp-controller="Movies"><b>Back to Movies</b></a>
+</div>
+<style>
+    .producer-details-container{
+        width: 700px;
+        border: 2px solid darkred;
+        border-radius:4px;
+        box-shadow: 5px 5px 5px grey;
+        margin-top:20px;
+        padding:20px;
+    }
+    .title{
+        text-align: center;
+        color: darkred;
+        margin-bottom: 20px;
+    }
+    h4{
+        margin-bottom: 20px;
+    }
+    .orders{
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+    .order-row{
+        background-color: #f5f5f5;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius:3px;
+        padding:15px;
+    }
+
+    .order-details {
+        padding: 8px 12px;
+        color: white;
+        background-color: darkred;
+        border-radius: 3px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .order-details:hover {
+        color: white;
+        background-color: crimson;
+    }
+</style>

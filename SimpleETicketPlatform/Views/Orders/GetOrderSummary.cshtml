@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Cart summary: ";
 }
-<h3 class="title">@ViewBag.Title</h3>
+<h3 class="title">@ViewData["Title"]</h3>
 <div class="cart-summary-container">
     <div class="items">
         @foreach (var item in Model.Items)
@@ -42,13 +42,14 @@
 @section Scripts {
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <script>
-        let _total = @Html.Raw(Model.TotalPrice);
+        let _total = @Html.Raw(Model.TotalPrice.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+        let _cartId = '@Model.Id';
         paypal.Button.render({
             env: 'sandbox',
             client: {
                 sandbox: 'ATY4eKw9K3rOiQlQ6S42xRgZtvDIo3k4vOXW5PkyCHFvqz0uwrfHL9Y9nrYTlusye-rd8xlKGnvWM_ci'
             },
-            locale: 'en_US', 
+            locale: 'en_US',
             style: {
                 size: 'small',
                 color: 'gold',
@@ -65,17 +66,19 @@
                         }
                     }]
                 });
-                
             },
             onAuthorize: function (data, actions) {
                 return actions.payment.execute().then(function () {
-                    var url = '@Url.Action("PlaceOrder", "Orders", new {id = Model.Id})';
+                    var url = '@Url.Action("PlaceOrder", "Orders", new { id = "__cartId__" })';
+                    url = url.replace("__cartId__", _cartId);
+
                     window.location.href = url;
                 });
             }
         }, '#paypal-btn');
     </script>
 }
+
 
 <style>
     .image{

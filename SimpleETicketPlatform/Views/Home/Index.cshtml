@@ -1,8 +1,110 @@
-﻿@{
+﻿@model SimpleETicketPlatform.Core.Models.Home.IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="idex-page-container">
+    <div class="screen">
+        <div class="movie-slideshow">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="movie-image">
+                    <img src="@movie.PhotoURL" />
+                    <div class="movie-title">
+                        <h4>@movie.Name</h4>
+                    </div>
+                </div>
+            }
+            <button class="button-next" onclick="showNextSlide()">></button>
+            <button class="button-previous" onclick="showPreviousSlide()"><</button>
+        </div>
+    </div>
+    <h2 class="end"><b>THE END</b></h2>
+    <div class="producers-actors-info">
+        <h3>CAST:</h3>
+        @foreach (var actor in Model.Actors)
+        {
+            <div class="names">
+            <h4>@actor.FirstName</h4>
+            <h4>@actor.LastName</h4>
+            </div>
+        }
+        <h3>RODUCERS:</h3>
+        @foreach (var producers in Model.Producers)
+        {
+            <div class="names">
+                <h4>@producers.FirstName</h4>
+                <h4>@producers.LastName</h4>
+            </div>
+        }
+    </div>
+    <div class="cinemas">
+        <h4>Watch exclusively in:</h4>
+        @foreach (var cinema in Model.Cinemas)
+        {
+            <h4>@cinema.Name</h4>
+        }
+    </div>
 </div>
+<script>
+    let currentPhoto = 0;
+    const allPhotos = document.querySelectorAll('.movie-image'); 
+
+    function showPhoto(idx) {
+        for (let i = 0; i < allPhotos.length; i++) { 
+            allPhotos[i].style.display = 'none'; 
+        }
+        allPhotos[idx].style.display = 'flex'; 
+    }
+
+    function showNextSlide() {
+        currentPhoto++;
+        if (currentPhoto >= allPhotos.length) { 
+            currentPhoto = 0; 
+        }
+        showPhoto(currentPhoto);
+    }
+
+    function showPreviousSlide() {
+        currentPhoto--;
+        if (currentPhoto < 0) {
+            currentPhoto = allPhotos.length - 1; 
+        }
+        showPhoto(currentPhoto);
+    }
+
+    showPhoto(currentPhoto);
+
+</script>
+<style>
+    .idex-page-container{
+        display: flex;
+        width: 1050px;
+        margin-top:20px;
+        padding:20px;
+        border: 1px solid darkred;
+        border-radius:2px;
+        box-shadow: 4px 4px grey;
+        flex-direction:column;
+    }
+    img{
+        width:300px;
+        height:200px;
+    }
+
+    .screen{
+        height: 40%;
+        width: 80%;
+        flex-direction: row;
+        background-color: grey;
+        box-shadow: 8px 8px black;
+        border-radius: 4px;
+    }
+
+    .producers-actors-info{
+        height: 30%;
+    }
+    .cinemas{
+        height:10%
+    }
+</style>
+

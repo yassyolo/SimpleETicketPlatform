@@ -1,5 +1,4 @@
-﻿using SimpleETicketPlatform.Infrastructure.Data.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static SimpleETicketPlatform.Infrastructure.Data.Constants.ModelConstants.Movie;
 using static SimpleETicketPlatform.Core.Models.Constants.MessageConstants;
 
