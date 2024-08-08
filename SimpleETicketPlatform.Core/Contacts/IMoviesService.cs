@@ -1,5 +1,4 @@
-﻿
-using SimpleETicketPlatform.Core.Models.Movies;
+﻿using SimpleETicketPlatform.Core.Models.Movies;
 
 namespace SimpleETicketPlatform.Core.Contacts
 {
@@ -15,5 +14,6 @@ namespace SimpleETicketPlatform.Core.Contacts
         Task EditMovieAsync(int id, MovieFormViewModel model);
         Task<MovieIndexViewModel?> GetMovieForDeleteAsync(int id);
         Task DeleteMovieAsync(int id);
+        Task<IEnumerable<AllMoviesViewModel>> GetMoviesForIndexPageAsync();
     }
 }

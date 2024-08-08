@@ -16,6 +16,9 @@ namespace SimpleETicketPlatform.Infrastructure.Data.Models
 		[Comment("Order user identifier")]
 		public string UserId { get; set; } = string.Empty;
 
+        [Comment("Order date when made")]
+        public DateTime Date { get; set; }
+
         [Comment("Order items")]
 		public IEnumerable<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 	}

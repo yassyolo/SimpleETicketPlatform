@@ -43,7 +43,7 @@ namespace SimpleETicketPlatform.Controllers
                 var passwordCheck = await userManager.CheckPasswordAsync(account, model.Password);
                 if (passwordCheck)
                 {
-                    var result = await signInManager.PasswordSignInAsync(account, model.Password, false, false);
+                    var result = await signInManager.PasswordSignInAsync(account, model.Password, true, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction(nameof(PersonalAccount));

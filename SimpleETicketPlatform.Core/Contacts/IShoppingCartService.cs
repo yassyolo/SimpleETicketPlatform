@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using SimpleETicketPlatform.Core.Models.Cart;
+﻿using SimpleETicketPlatform.Core.Models.Cart;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
 
 namespace SimpleETicketPlatform.Core.Contacts

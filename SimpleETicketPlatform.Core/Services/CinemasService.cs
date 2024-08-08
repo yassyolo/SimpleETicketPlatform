@@ -56,7 +56,7 @@ namespace SimpleETicketPlatform.Core.Services
 			if (!string.IsNullOrEmpty(searchTerm))
 			{
 				var normalizedSearchTerm = searchTerm.ToLower();
-				cinemas = cinemas.Where(x => x.Name.Contains(normalizedSearchTerm));
+				cinemas = cinemas.Where(x => x.Name.ToLower().Contains(normalizedSearchTerm));
 			}
 			var cinemasToShow = await cinemas.
 				Select(x => new CinemaIndexViewModel()
@@ -119,7 +119,7 @@ namespace SimpleETicketPlatform.Core.Services
 				{
 					Id = x.Id,
 					Name = x.Name,
-					Category = x.MovieCategory.ToString()
+					Category = x.MovieCategory.Name.ToString()
 				}).ToListAsync();
         }
 
@@ -127,5 +127,10 @@ namespace SimpleETicketPlatform.Core.Services
 		{
 			return  repository.AllReadOnly<Movie>().Where(x => x.CinemaId == id).Count();
 		}
-	}
+
+        public async Task<IEnumerable<CinemaIndexViewModel>> GetCinemaNamesAsync()
+        {
+			return await repository.AllReadOnly<Cinema>().Select(x => new CinemaIndexViewModel() { Name = x.Name }).ToListAsync();
+        }
+    }
 }

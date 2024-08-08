@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleETicketPlatform.Core.Contacts;
-using SimpleETicketPlatform.Core.CustomExceptions;
 using SimpleETicketPlatform.Core.Models.Actors;
 using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
@@ -73,14 +72,31 @@ namespace SimpleETicketPlatform.Core.Services
                 .FirstOrDefaultAsync();
 		}
 
-		public async Task<FilteredActorsViewModel> GetAllActorsAsync(string searchTerm)
+        public async Task<IEnumerable<ActorNamesViewModel>> GetActorsNamesAsync()
+        {
+            var actorsNames = await repository.AllReadOnly<Actor>().Select(x => x.FullName).Take(4).ToListAsync();
+            var namesToReturn = new List<ActorNamesViewModel>();
+            foreach (var name in actorsNames)
+            {
+                var namesSplit = name.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var nameToReturn = new ActorNamesViewModel()
+                {
+                    FirstName = namesSplit[0],
+                    LastName = namesSplit[1]
+                };
+                namesToReturn.Add(nameToReturn);
+            }
+            return namesToReturn;
+        }
+
+        public async Task<FilteredActorsViewModel> GetAllActorsAsync(string searchTerm)
         {
             var actors =  repository.AllReadOnly<Actor>();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 var normalizedSearchTerm = searchTerm.ToLower();
-                actors = actors.Where(x => x.FullName.Contains(normalizedSearchTerm));
+                actors = actors.Where(x => x.FullName.ToLower().Contains(normalizedSearchTerm));
             }
             var actorsToShow =  await actors
                 .Select(x => new ActorIndexViewModel()
@@ -111,7 +127,7 @@ namespace SimpleETicketPlatform.Core.Services
                     {
                         Id = x.MovieId,
                         Name = x.Movie.Name,
-                        Category = x.Movie.MovieCategory.ToString()
+                        Category =x.Movie.MovieCategory.Name.ToString()
                     })
                 }).FirstOrDefaultAsync();
            

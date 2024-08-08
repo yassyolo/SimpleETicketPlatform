@@ -2,9 +2,7 @@
 using SimpleETicketPlatform.Core.Contacts;
 using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Core.Models.Producers;
-using SimpleETicketPlatform.Infrastructure.Data.Models;
 using SimpleETicketPlatform.Infrastructure.Repository;
-using static SimpleETicketPlatform.Infrastructure.Data.Constants.ModelConstants;
 
 
 namespace SimpleETicketPlatform.Core.Services
@@ -25,7 +23,7 @@ namespace SimpleETicketPlatform.Core.Services
 			if (!string.IsNullOrWhiteSpace(searchTerm))
 			{
 				var normalizedSearchTerm = searchTerm.ToLower();
-				producers = producers.Where(x => x.FullName.Contains(normalizedSearchTerm));
+				producers = producers.Where(x => x.FullName.ToLower().Contains(normalizedSearchTerm));
 			}
 			var producersToShow =  await producers.
 				Select(x => new ProducerIndexViewModel()
@@ -122,6 +120,23 @@ namespace SimpleETicketPlatform.Core.Services
 					Id = x.Id,
 					FullName = x.FullName
 				}).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<ProducersNameViewModel>> GetProducerNamesAsync()
+        {
+            var producerNames = await repository.AllReadOnly<Infrastructure.Data.Models.Producer>().Select(x => x.FullName).Take(4).ToListAsync();
+            var namesToReturn = new List<ProducersNameViewModel>();
+            foreach (var name in producerNames)
+            {
+                var namesSplit = name.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var nameToReturn = new ProducersNameViewModel()
+                {
+                    FirstName = namesSplit[0],
+                    LastName = namesSplit[1]
+                };
+                namesToReturn.Add(nameToReturn);
+            }
+            return namesToReturn;
         }
     }
 }

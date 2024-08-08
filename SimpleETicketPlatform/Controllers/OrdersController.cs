@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleETicketPlatform.Core.Contacts;
-using SimpleETicketPlatform.Core.Models.Cart;
 using SimpleETicketPlatform.Extensions;
 
 namespace SimpleETicketPlatform.Controllers
@@ -41,7 +40,8 @@ namespace SimpleETicketPlatform.Controllers
             var userId = User.GetId();
             var email = User.GetEmail();
             await ordersService.MakeOrderAsync(id, userId, email);
-            return RedirectToAction(nameof(SuccessfulOrder), new {id = id});
+            var orderId = await ordersService.GetOrderByIdAsync(userId);
+            return RedirectToAction(nameof(SuccessfulOrder), new {id = orderId});
         }
         public async Task<IActionResult> SuccessfulOrder(int id)
         {
@@ -53,11 +53,12 @@ namespace SimpleETicketPlatform.Controllers
             var model = await ordersService.GetSuccesfulOrderByIdAsync(id);
             return View(model);
         }
-        /*public async Task<IActionResult> OrdersHistory(string id)
+        public async Task<IActionResult> OrdersHistory(string id)
         {
-            var model = await ordersService.GetOrdersForIdAsync(id);
+            var userId = User.GetId();
+            var model = await ordersService.GetOrdersHistoryForIdAsync(userId);
             return View(model);
-        */
+        }
 
     }
 }

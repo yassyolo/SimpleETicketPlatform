@@ -5,7 +5,6 @@ using SimpleETicketPlatform.Core.Models.Actors;
 using SimpleETicketPlatform.Core.Models.Movies;
 using SimpleETicketPlatform.Core.Models.Producers;
 using SimpleETicketPlatform.Infrastructure.Data.Models;
-using SimpleETicketPlatform.Infrastructure.Migrations;
 using SimpleETicketPlatform.Infrastructure.Repository;
 
 namespace SimpleETicketPlatform.Core.Services
@@ -248,6 +247,17 @@ namespace SimpleETicketPlatform.Core.Services
 				await repository.DeleteAsync<MovieActor>(movieActor);
 			}
             await repository.DeleteAsync<Movie>(movie);
+        }
+
+        public async Task<IEnumerable<AllMoviesViewModel>> GetMoviesForIndexPageAsync()
+        {
+			return await repository.AllReadOnly<Movie>().
+				Select(x => new AllMoviesViewModel()
+				{
+					Id = x.Id,
+					Name = x.Name,
+					PhotoURL = x.PhotoURL
+				}).Take(5).ToListAsync();
         }
     }
 }

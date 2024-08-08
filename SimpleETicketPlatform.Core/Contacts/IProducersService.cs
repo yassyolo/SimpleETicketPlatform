@@ -1,5 +1,4 @@
-﻿
-using SimpleETicketPlatform.Core.Models.Producers;
+﻿using SimpleETicketPlatform.Core.Models.Producers;
 
 namespace SimpleETicketPlatform.Core.Contacts
 {
@@ -12,6 +11,7 @@ namespace SimpleETicketPlatform.Core.Contacts
 		Task<ProducerDetailsViewModel?> GetProducerDetailsAsync(int id);
         Task<ProducerIndexViewModel?> GetProducerForDeleteAsync(int id);
         Task<ProducerFormViewModel?> GetProducerForEditAsync(int id);
-		Task<bool> ProducerExistsByIdAsync(int id);
+        Task<IEnumerable<ProducersNameViewModel>> GetProducerNamesAsync();
+        Task<bool> ProducerExistsByIdAsync(int id);
 	}
 }

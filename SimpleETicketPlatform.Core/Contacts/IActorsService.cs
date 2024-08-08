@@ -11,7 +11,8 @@ namespace SimpleETicketPlatform.Core.Contacts
 		Task EditActorAsync(int id, ActorFormViewModel model);
 		Task<ActorIndexViewModel?> GetActorForDeleteAsync(int id);
 		Task<ActorFormViewModel?> GetActorForEditAsync(int id);
-		Task<FilteredActorsViewModel> GetAllActorsAsync(string searchTerm);
+        Task<IEnumerable<ActorNamesViewModel>> GetActorsNamesAsync();
+        Task<FilteredActorsViewModel> GetAllActorsAsync(string searchTerm);
 		Task<ActorDetailsViewModel?> GetDetailsForActorAsync(int id);
 	}
 }

@@ -1,10 +1,8 @@
-﻿
-using Microsoft.VisualBasic;
-using SimpleETicketPlatform.Core.Models.Cinemas;
+﻿using SimpleETicketPlatform.Core.Models.Cinemas;
 
 namespace SimpleETicketPlatform.Core.Contacts
 {
-	public interface ICinemasService
+    public interface ICinemasService
 	{
 		Task AddCinemaAsync(CinemaFormViewModel model);
 		Task<bool> CinemaExistsByIdAsync(int id);
@@ -13,6 +11,7 @@ namespace SimpleETicketPlatform.Core.Contacts
         Task<FilteredCinemasViewModel?> GetAllCinemasAsync(string searchTerm);
 		Task<CinemaIndexViewModel?> GetCinemaForDeleteAsync(int id);
 		Task<CinemaFormViewModel?> GetCinemaForEditAsync(int id);
-		Task<CinemaDetailsViewModel?> GetDetailsForCinemaAsync(int id);
+        Task<IEnumerable<CinemaIndexViewModel>> GetCinemaNamesAsync();
+        Task<CinemaDetailsViewModel?> GetDetailsForCinemaAsync(int id);
 	}
 }
